@@ -1,0 +1,49 @@
+Mon Jan  6 10:13:56 2020
+[4.0 minutes]	Sample chunking completed.
+[4.0 minutes]	Starting Gloay correction, resetting timer.
+[2.7 minutes]	Gloay correction completed.
+[2.7 minutes]	Starting sample chunk threads, resetting timer.
+[13.8 minutes]	Chunk 38 completed.
+[31.2 minutes]	Chunk 18 completed.
+[31.5 minutes]	Chunk 15 completed.
+[31.5 minutes]	Chunk 14 completed.
+[31.6 minutes]	Chunk 11 completed.
+[31.8 minutes]	Chunk 19 completed.
+[31.8 minutes]	Chunk 17 completed.
+[31.9 minutes]	Chunk 16 completed.
+[32.0 minutes]	Chunk 10 completed.
+[32.1 minutes]	Chunk 13 completed.
+[32.1 minutes]	Chunk 6 completed.
+[32.3 minutes]	Chunk 35 completed.
+[32.3 minutes]	Chunk 2 completed.
+[32.4 minutes]	Chunk 7 completed.
+[32.4 minutes]	Chunk 3 completed.
+[32.4 minutes]	Chunk 12 completed.
+[32.5 minutes]	Chunk 32 completed.
+[32.6 minutes]	Chunk 9 completed.
+[32.7 minutes]	Chunk 34 completed.
+[32.8 minutes]	Chunk 5 completed.
+[32.9 minutes]	Chunk 4 completed.
+[32.9 minutes]	Chunk 31 completed.
+[32.9 minutes]	Chunk 36 completed.
+[32.9 minutes]	Chunk 30 completed.
+[32.9 minutes]	Chunk 8 completed.
+[32.9 minutes]	Chunk 37 completed.
+[33.0 minutes]	Chunk 27 completed.
+[33.1 minutes]	Chunk 1 completed.
+[33.1 minutes]	Chunk 23 completed.
+[33.1 minutes]	Chunk 20 completed.
+[33.1 minutes]	Chunk 26 completed.
+[33.2 minutes]	Chunk 24 completed.
+[33.2 minutes]	Chunk 33 completed.
+[33.2 minutes]	Chunk 22 completed.
+[33.4 minutes]	Chunk 29 completed.
+[33.4 minutes]	Chunk 28 completed.
+[33.5 minutes]	Chunk 25 completed.
+[33.5 minutes]	Chunk 21 completed.
+[26.9 minutes]	Collating read pairs which were removed because the break read aligned to the vector.
+[157.2 minutes]	Removin multi-hit read pairs (3169 read pairs).
+[157.3 minutes]	Removing read pairs which share random linker IDs between samples.
+[158.0 minutes]	Removed 2.86% of fragment reads because one or more other reads shared the same random linker sequence.
+[162.8 minutes]	Starting fragment creation in LTR/ITR capture mode.
+[166.0 minutes]	done.
