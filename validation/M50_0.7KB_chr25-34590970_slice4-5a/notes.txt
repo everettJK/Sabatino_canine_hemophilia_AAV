@@ -1,0 +1,11 @@
+>assembled contig which had the expected flanking genomic sequence in correct position
+GAGAGAGGAAAGAGGGAAGCAACTGAACGCAACGCGTAAAGCGCGCAGCGCGGAGTTGAAAAGCACTGTACACTGCCCAGGCAAAGCGTCCGGGCAGCGTAGGCGGGCGAGCGCGCAGAGAGGGAGTGGCCAACTCCATCACTAGGGGTTCCTTGTAGTTAATGATTAACCCGGGGAGGCTGCTGGTGAATATCAACCAAGGTCACCCCAGTTATCGGAGGAGCAAACAGGGGCTAAGTCCACTGGCTGGGATCTGAGTCGCCAGCCTACGCTGCCCGGACGCTTTGCCTGGGCAGTGTACAGTGCTTTTCAACTCCGCGCTGCGCGCTTTACGCGTTGCGTTCAGTTGCTTCCCTCTTTCCTC
+
+>sequence without flanking genomic sequence -- enters from end of sequence.
+gagagaggaa agagggaagc aactgaacgc aacgcgtaaa gcgcgcagcg
+cggagttgaa aagcactgta cactgcccag gcaaagcgtc cgggcagcgt  
+aggcgggcga gcgcgcagag agggagtggc caactccatc actaggggtt  
+ccttgtagtt aatgattaac ccggggaggc tgctggtgaa tatcaaccaa  
+ggtcacccca gttatcggag gagcaaacag gggctaagtc cactggctgg  
+gatctgagtc gccagcctac gctgcccgga cgctttgcct gggcagtgta  
+cagtgc

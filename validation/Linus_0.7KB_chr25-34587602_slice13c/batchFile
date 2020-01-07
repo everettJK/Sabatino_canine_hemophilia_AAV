@@ -1,0 +1,9 @@
+new
+genome /home/everett/releases/Canine_hemophilia_AAV/plasmids/IGV_genomes/VectorSeqs_ITR_to_ITR.genome
+load  /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_0.7KB_chr25-34587602_slice13c/alignments/R1R2.vector.sorted.bam
+snapshotDirectory /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_0.7KB_chr25-34587602_slice13c
+goto SingleChainVector:1-5411
+sort position
+collapse
+snapshot vector.single.allReads.png
+exit

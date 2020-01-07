@@ -1,0 +1,21 @@
+sample,posid,highestMethods,notes
+GTSP2160,chr25-34590970,Nextera,ITR + promotor + 100bp of F8
+GTSP2161,chr14-55620581,Sanger
+GTSP2161,chr15-42531469,Nextera,ITR + promotor + 100bp of F8
+GTSP2162,chr4-14832997,Sanger
+GTSP2162,chr4+14757686,Nextera,Best match to ~ 575 of SingleChain vector (ITR + 1/4 of promotor)
+GTSP2162,chr12+38081605,Short PCR
+GTSP2165,chr4+14709696,Long PCR
+GTSP2166,chr4+14733827,Sanger
+GTSP2166,chr25-34587602,Nextera,~ 575 NT of Light/Heavy vector (ITR + 1/4 of promotor)
+GTSP2167,chr37+13443531,Nextera,~ 440 NT of light chain C term (145 AA last full domain - F5/8 type C 2)  + polyA + 3' ITR
+GTSP2168,chr4-14681249,Failed
+GTSP2168,chr18+48493167,Long PCR
+GTSP2168,chr22-1840213,Nextera,full heavy chain
+GTSP2172,chr18-48600092,Sanger/Long PCR
+GTSP2173,chr25-34458017,Sanger/Long PCR
+GTSP2174,chr4+14552338,Sanger/Long PCR
+GTSP2174,chr18+48578102,Failed
+GTSP2174,chr25-34548677,Sanger/Long PCR
+GTSP2160,chr4+14801159,Pending
+GTSP2168,chr18-48556862,Pending

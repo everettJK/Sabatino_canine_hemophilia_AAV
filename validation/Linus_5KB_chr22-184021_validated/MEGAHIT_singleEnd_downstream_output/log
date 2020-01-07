@@ -1,0 +1,369 @@
+2019-12-13 17:43:26 - MEGAHIT v1.2.9
+2019-12-13 17:43:26 - Using megahit_core with POPCNT and BMI2 support
+2019-12-13 17:43:26 - Convert reads to binary library
+2019-12-13 17:43:26 - command /home/everett/software/MEGAHIT-1.2.9-Linux-x86_64-static/bin/megahit_core buildlib /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/reads.lib /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/reads.lib
+2019-12-13 17:43:26 - INFO  sequence/io/sequence_lib.cpp  :   77 - Lib 0 (/home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/unique.downStream.bridgingReads.fasta): se, 1290 reads, 251 max length
+2019-12-13 17:43:26 - INFO  utils/utils.h                 :  152 - Real: 0.0025	user: 0.0000	sys: 0.0000	maxrss: 7252
+2019-12-13 17:43:26 - Start assembly. Number of CPU threads 48 
+2019-12-13 17:43:26 - k list: 15,21,27,33,39,45,51,57,63,69,75,81,87,93,99,105,111,117,123 
+2019-12-13 17:43:26 - Memory used: 182431833292
+2019-12-13 17:43:26 - Extracting solid (k+1)-mers and building sdbg for k = 15
+2019-12-13 17:43:26 - command /home/everett/software/MEGAHIT-1.2.9-Linux-x86_64-static/bin/megahit_core read2sdbg -k 15 -m 1 --host_mem 1.82431833292e+11 --mem_flag 1 --output_prefix /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k15/15 --num_cpu_threads 48 --read_lib_file /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/reads.lib
+2019-12-13 17:43:26 - INFO  sequence/io/sequence_lib.cpp  :  115 - Before reading, sizeof seq_package: 88348
+2019-12-13 17:43:26 - INFO  sequence/io/sequence_lib.cpp  :  117 - After reading, sizeof seq_package: 88348
+2019-12-13 17:43:26 - INFO  sorting/read_to_sdbg_s1.cpp   :  105 - 1290 reads, 251 max read length, 312077 total bases
+2019-12-13 17:43:26 - INFO  sorting/read_to_sdbg_s1.cpp   :  109 - 2 words per substring
+2019-12-13 17:43:26 - INFO  sorting/read_to_sdbg_s1.cpp   :  124 - Number of files for mercy candidate reads: 1
+2019-12-13 17:43:26 - INFO  sorting/base_engine.cpp       :  148 - Preparing data...
+2019-12-13 17:43:26 - INFO  sorting/read_to_sdbg_s2.cpp   :  103 - 2 words per substring, words per dummy node ($v): 1
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  153 - Preparing data... Done. Time elapsed: 0.0542
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  156 - Preparing partitions and calculating bucket sizes...
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :   80 - Minimum memory required: 126588 bytes
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  138 - Lv1 items: 78748, Lv2 items: 7488
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  140 - Memory of derived class: 90812, Memory for Lv1+Lv2: 374896
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  168 - Preparing partitions and calculating bucket sizes... Done. Time elapsed: 0.0714
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  172 - Start main loop...
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 0 to 22
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0079
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0059
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 22 to 46
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0114
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0143
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 46 to 71
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0098
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0107
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 71 to 96
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0046
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0058
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 96 to 121
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0046
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0045
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 121 to 147
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0058
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0063
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 147 to 174
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0045
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0044
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 174 to 202
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0094
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0093
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 202 to 232
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0046
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0059
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 232 to 266
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0045
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0075
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 266 to 304
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0047
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0090
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 304 to 345
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0047
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0101
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 345 to 389
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0053
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0043
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 389 to 439
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0051
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0108
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 439 to 507
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0107
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0097
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 507 to 600
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0051
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0095
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 600 to 1139
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0100
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0056
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 1139 to 65536
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0193
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0139
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  204 - Main loop done. Time elapsed: 0.2834
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  207 - Postprocessing...
+2019-12-13 17:43:27 - INFO  sorting/read_to_sdbg_s2.cpp   :  618 - Number of $ A C G T A- C- G- T-:
+2019-12-13 17:43:27 - INFO  sorting/read_to_sdbg_s2.cpp   :  619 - 116 7387 4399 4436 7540 466 259 249 450
+2019-12-13 17:43:27 - INFO  sorting/read_to_sdbg_s2.cpp   :  624 - Total number of edges: 25302
+2019-12-13 17:43:27 - INFO  sorting/read_to_sdbg_s2.cpp   :  625 - Total number of ONEs: 23762
+2019-12-13 17:43:27 - INFO  sorting/read_to_sdbg_s2.cpp   :  627 - Total number of $v edges: 116
+2019-12-13 17:43:27 - INFO  sorting/base_engine.cpp       :  210 - Postprocess done. Time elapsed: 0.0536
+2019-12-13 17:43:27 - INFO  utils/utils.h                 :  152 - Real: 0.4943	user: 9.6840	sys: 0.1160	maxrss: 110264
+2019-12-13 17:43:27 - Assemble contigs from SdBG for k = 15
+2019-12-13 17:43:27 - command /home/everett/software/MEGAHIT-1.2.9-Linux-x86_64-static/bin/megahit_core assemble -s /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k15/15 -o /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k15 -t 48 --min_standalone 300 --prune_level 2 --merge_len 20 --merge_similar 0.95 --cleaning_rounds 5 --disconnect_ratio 0.1 --low_local_ratio 0.2 --cleaning_rounds 5 --min_depth 2 --bubble_level 2 --max_tip_len -1 --careful_bubble
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  129 - Loading succinct de Bruijn graph: /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k15/15Done. Time elapsed: 0.082468
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  133 - Number of Edges: 25302; K value: 15
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  140 - Number of CPU threads: 48
+2019-12-13 17:43:27 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 2; Accumulated tips removed: 12; time elapsed: 0.0370
+2019-12-13 17:43:27 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 4; Accumulated tips removed: 24; time elapsed: 0.0175
+2019-12-13 17:43:27 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 8; Accumulated tips removed: 60; time elapsed: 0.0197
+2019-12-13 17:43:27 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 16; Accumulated tips removed: 94; time elapsed: 0.0119
+2019-12-13 17:43:27 - INFO  assembly/sdbg_pruning.cpp     :  169 - Removing tips with length less than 30; Accumulated tips removed: 106; time elapsed: 0.0156
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  158 - Tips removal done! Time elapsed(sec): 0.118
+2019-12-13 17:43:27 - INFO  assembly/unitig_graph.cpp     :   84 - Graph size without loops: 1390, palindrome: 0
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  167 - unitig graph size: 1390, time for building: 0.014
+2019-12-13 17:43:27 - INFO  assembly/contig_stat.h        :   40 - Max: 166, Min: 16, N50: 27, number contigs: 1390, number isolated: 0, number looped: 0, total size: 32894,
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  184 - Graph cleaning round 1
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  201 - Number of bubbles removed: 2, Time elapsed(sec): 0.031
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  211 - Number of complex bubbles removed: 1, Time elapsed(sec): 0.024750
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  222 - Number unitigs disconnected: 1071, time: 0.037
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  246 - Unitigs removed in excessive pruning: 2, time: 0.036
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  184 - Graph cleaning round 2
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  192 - Tips removed: 353, time: 0.121
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  201 - Number of bubbles removed: 0, Time elapsed(sec): 0.038
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  211 - Number of complex bubbles removed: 0, Time elapsed(sec): 0.027684
+2019-12-13 17:43:27 - INFO  main_assemble.cpp             :  222 - Number unitigs disconnected: 0, time: 0.028
+2019-12-13 17:43:28 - INFO  main_assemble.cpp             :  246 - Unitigs removed in excessive pruning: 0, time: 0.005
+2019-12-13 17:43:28 - INFO  main_assemble.cpp             :  184 - Graph cleaning round 3
+2019-12-13 17:43:28 - INFO  main_assemble.cpp             :  192 - Tips removed: 0, time: 0.110
+2019-12-13 17:43:28 - INFO  main_assemble.cpp             :  201 - Number of bubbles removed: 0, Time elapsed(sec): 0.042
+2019-12-13 17:43:28 - INFO  main_assemble.cpp             :  211 - Number of complex bubbles removed: 0, Time elapsed(sec): 0.032190
+2019-12-13 17:43:28 - INFO  main_assemble.cpp             :  222 - Number unitigs disconnected: 0, time: 0.030
+2019-12-13 17:43:28 - INFO  main_assemble.cpp             :  246 - Unitigs removed in excessive pruning: 0, time: 0.004
+2019-12-13 17:43:28 - INFO  assembly/contig_stat.h        :   40 - Max: 593, Min: 16, N50: 26, number contigs: 568, number isolated: 32, number looped: 0, total size: 14720,
+2019-12-13 17:43:28 - INFO  main_assemble.cpp             :  267 - Time to output: 0.009279
+2019-12-13 17:43:28 - INFO  main_assemble.cpp             :  289 - Number of local low depth unitigs removed: 7, complex bubbles removed: 0, time: 0.156804
+2019-12-13 17:43:28 - INFO  assembly/contig_stat.h        :   40 - Max: 593, Min: 16, N50: 26, number contigs: 548, number isolated: 39, number looped: 0, total size: 14338,
+2019-12-13 17:43:28 - INFO  utils/utils.h                 :  152 - Real: 0.9849	user: 34.1600	sys: 0.1120	maxrss: 20392
+2019-12-13 17:43:28 - Local assembly for k = 15
+2019-12-13 17:43:28 - command /home/everett/software/MEGAHIT-1.2.9-Linux-x86_64-static/bin/megahit_core local -c /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k15.contigs.fa -l /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/reads.lib -t 48 -o /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k15.local.fa --kmax 21
+2019-12-13 17:43:28 - INFO  localasm/hash_mapper.cpp      :  100 - Number of contigs: 1, index size: 71
+2019-12-13 17:43:28 - INFO  localasm/local_assemble.cpp   :  315 - Hash mapper construction time elapsed: 0.035283
+2019-12-13 17:43:28 - INFO  sequence/io/sequence_lib.cpp  :  115 - Before reading, sizeof seq_package: 88348
+2019-12-13 17:43:28 - INFO  sequence/io/sequence_lib.cpp  :  117 - After reading, sizeof seq_package: 88348
+2019-12-13 17:43:28 - INFO  localasm/local_assemble.cpp   :  324 - Read lib time elapsed: 0.000643
+2019-12-13 17:43:28 - INFO  localasm/local_assemble.cpp   :  330 - Insert size estimation time elapsed: 0.000002
+2019-12-13 17:43:28 - INFO  localasm/local_assemble.cpp   :  221 - Lib 0: total 1290 reads, aligned 60576, added 0 reads to local assembly
+2019-12-13 17:43:28 - INFO  localasm/local_assemble.cpp   :  338 - Mapping time elapsed: 0.030129
+2019-12-13 17:43:28 - INFO  localasm/local_assemble.cpp   :  232 - Minimum number of reads to do local assembly: 0
+2019-12-13 17:43:28 - INFO  localasm/local_assemble.cpp   :  346 - Local assembly time elapsed: 0.013047
+2019-12-13 17:43:28 - INFO  utils/utils.h                 :  152 - Real: 0.0797	user: 1.8040	sys: 0.0120	maxrss: 7264
+2019-12-13 17:43:28 - Extract iterative edges from k = 15 to 21 
+2019-12-13 17:43:28 - command /home/everett/software/MEGAHIT-1.2.9-Linux-x86_64-static/bin/megahit_core iterate -c /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k15.contigs.fa -b /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k15.bubble_seq.fa -t 48 -k 15 -s 6 -o /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k21/21 -r /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/reads.lib.bin
+2019-12-13 17:43:28 - INFO  main_iterate.cpp              :  190 - Selected kmer type size for k: 8
+2019-12-13 17:43:28 - INFO  main_iterate.cpp              :  174 - Read 536 contigs
+2019-12-13 17:43:28 - INFO  main_iterate.cpp              :  176 - Number of flank kmers: 1014
+2019-12-13 17:43:28 - INFO  main_iterate.cpp              :  174 - Read 3 contigs
+2019-12-13 17:43:28 - INFO  main_iterate.cpp              :  176 - Number of flank kmers: 1018
+2019-12-13 17:43:28 - INFO  main_iterate.cpp              :  123 - Selected kmer type size for next k: 8
+2019-12-13 17:43:28 - INFO  main_iterate.cpp              :  139 - Processed: 1290, aligned: 312. Iterative edges: 2218
+2019-12-13 17:43:28 - INFO  main_iterate.cpp              :  143 - Total: 1290, aligned: 312. Iterative edges: 2218
+2019-12-13 17:43:28 - INFO  utils/utils.h                 :  152 - Real: 0.0614	user: 1.2120	sys: 0.0400	maxrss: 7264
+2019-12-13 17:43:28 - Build graph for k = 21 
+2019-12-13 17:43:28 - command /home/everett/software/MEGAHIT-1.2.9-Linux-x86_64-static/bin/megahit_core seq2sdbg --host_mem 1.82431833292e+11 --mem_flag 1 --output_prefix /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k21/21 --num_cpu_threads 48 -k 21 --kmer_from 15 --input_prefix /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k21/21 --addi_contig /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k15.addi.fa --local_contig /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k15.local.fa --contig /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k15.contigs.fa --bubble /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k15.bubble_seq.fa
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  148 - Preparing data...
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  369 - Number edges: 2218
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  415 - Bases to reserve: 65092, number contigs: 582, number multiplicity: 2800
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  422 - Before reading, sizeof seq_package: 20940, multiplicity vector: 2800
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  428 - Read 2218 edges.
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  433 - After reading, sizeof seq_package: 20940/2218/48796, multiplicity vector: 2218/2800
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  458 - Read 299 contigs from /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k15.contigs.fa.
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  463 - After reading contigs, sizeof seq_package: 20940/2517/58606, multiplicity vector: 2517/2800
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  470 - Read 1 contigs from /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k15.bubble_seq.fa.
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  475 - After reading contigs, sizeof seq_package: 20940/2518/58634, multiplicity vector: 2518/2800
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  484 - Read 9 contigs from /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k15.addi.fa.
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  489 - After reading contigs, sizeof seq_package: 20940/2527/58890, multiplicity vector: 2527/2800
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  498 - Read 0 contigs from /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k15.local.fa.
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  503 - After reading contigs, sizeof seq_package: 20940/2527/58890, multiplicity vector: 2527/2800
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  508 - Finally, sizeof seq_package: 20940/2527/58890, multiplicity vector: 2527/2800
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  153 - Preparing data... Done. Time elapsed: 0.0966
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  156 - Preparing partitions and calculating bucket sizes...
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :   80 - Minimum memory required: 28148 bytes
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  138 - Lv1 items: 2900, Lv2 items: 528
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  140 - Memory of derived class: 27028, Memory for Lv1+Lv2: 15824
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  168 - Preparing partitions and calculating bucket sizes... Done. Time elapsed: 0.0664
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  172 - Start main loop...
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 0 to 30
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0142
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0062
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 30 to 68
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0065
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0073
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 68 to 119
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0043
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0047
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 119 to 204
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0043
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0032
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 204 to 347
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0054
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0022
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 347 to 619
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0040
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0041
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 619 to 1156
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0045
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0071
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 1156 to 2203
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0042
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0026
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 2203 to 5047
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0067
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0044
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 5047 to 65536
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0148
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0178
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  204 - Main loop done. Time elapsed: 0.1361
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  207 - Postprocessing...
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  793 - Number of $ A C G T A- C- G- T-:
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  794 - 522 3484 1897 1947 3558 29 14 20 31
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  800 - Total number of edges: 11502
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  801 - Total number of ONEs: 10886
+2019-12-13 17:43:28 - INFO  sorting/seq_to_sdbg.cpp       :  803 - Total number of $v edges: 522
+2019-12-13 17:43:28 - INFO  sorting/base_engine.cpp       :  210 - Postprocess done. Time elapsed: 0.0465
+2019-12-13 17:43:28 - INFO  utils/utils.h                 :  152 - Real: 0.3507	user: 3.7760	sys: 0.2120	maxrss: 110156
+2019-12-13 17:43:28 - Assemble contigs from SdBG for k = 21
+2019-12-13 17:43:28 - command /home/everett/software/MEGAHIT-1.2.9-Linux-x86_64-static/bin/megahit_core assemble -s /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k21/21 -o /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k21 -t 48 --min_standalone 300 --prune_level 2 --merge_len 20 --merge_similar 0.95 --cleaning_rounds 5 --disconnect_ratio 0.1 --low_local_ratio 0.2 --cleaning_rounds 5 --min_depth 2 --bubble_level 2 --max_tip_len -1 --careful_bubble
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  129 - Loading succinct de Bruijn graph: /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k21/21Done. Time elapsed: 0.092270
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  133 - Number of Edges: 11502; K value: 21
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  140 - Number of CPU threads: 48
+2019-12-13 17:43:29 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 2; Accumulated tips removed: 20; time elapsed: 0.0343
+2019-12-13 17:43:29 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 4; Accumulated tips removed: 60; time elapsed: 0.0202
+2019-12-13 17:43:29 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 8; Accumulated tips removed: 146; time elapsed: 0.0152
+2019-12-13 17:43:29 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 16; Accumulated tips removed: 404; time elapsed: 0.0248
+2019-12-13 17:43:29 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 32; Accumulated tips removed: 546; time elapsed: 0.0138
+2019-12-13 17:43:29 - INFO  assembly/sdbg_pruning.cpp     :  169 - Removing tips with length less than 42; Accumulated tips removed: 574; time elapsed: 0.0218
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  158 - Tips removal done! Time elapsed(sec): 0.157
+2019-12-13 17:43:29 - INFO  assembly/unitig_graph.cpp     :   84 - Graph size without loops: 29, palindrome: 0
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  167 - unitig graph size: 30, time for building: 0.028
+2019-12-13 17:43:29 - INFO  assembly/contig_stat.h        :   40 - Max: 593, Min: 22, N50: 89, number contigs: 30, number isolated: 15, number looped: 1, total size: 2296,
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  184 - Graph cleaning round 1
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  201 - Number of bubbles removed: 0, Time elapsed(sec): 0.039
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  211 - Number of complex bubbles removed: 0, Time elapsed(sec): 0.024994
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  222 - Number unitigs disconnected: 7, time: 0.029
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  246 - Unitigs removed in excessive pruning: 0, time: 0.002
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  184 - Graph cleaning round 2
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  192 - Tips removed: 10, time: 0.172
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  201 - Number of bubbles removed: 0, Time elapsed(sec): 0.026
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  211 - Number of complex bubbles removed: 0, Time elapsed(sec): 0.027266
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  222 - Number unitigs disconnected: 0, time: 0.029
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  246 - Unitigs removed in excessive pruning: 0, time: 0.002
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  184 - Graph cleaning round 3
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  192 - Tips removed: 0, time: 0.152
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  201 - Number of bubbles removed: 0, Time elapsed(sec): 0.026
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  211 - Number of complex bubbles removed: 0, Time elapsed(sec): 0.037349
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  222 - Number unitigs disconnected: 0, time: 0.033
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  246 - Unitigs removed in excessive pruning: 0, time: 0.004
+2019-12-13 17:43:29 - INFO  assembly/contig_stat.h        :   40 - Max: 593, Min: 22, N50: 127, number contigs: 17, number isolated: 14, number looped: 1, total size: 1898,
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  267 - Time to output: 0.002346
+2019-12-13 17:43:29 - INFO  main_assemble.cpp             :  289 - Number of local low depth unitigs removed: 0, complex bubbles removed: 0, time: 0.035178
+2019-12-13 17:43:29 - INFO  assembly/contig_stat.h        :   40 - Max: 593, Min: 22, N50: 127, number contigs: 17, number isolated: 14, number looped: 1, total size: 1898,
+2019-12-13 17:43:30 - INFO  utils/utils.h                 :  152 - Real: 1.0431	user: 33.0560	sys: 0.1040	maxrss: 20392
+2019-12-13 17:43:30 - Local assembly for k = 21
+2019-12-13 17:43:30 - command /home/everett/software/MEGAHIT-1.2.9-Linux-x86_64-static/bin/megahit_core local -c /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k21.contigs.fa -l /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/reads.lib -t 48 -o /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k21.local.fa --kmax 27
+2019-12-13 17:43:30 - INFO  localasm/hash_mapper.cpp      :  100 - Number of contigs: 1, index size: 71
+2019-12-13 17:43:30 - INFO  localasm/local_assemble.cpp   :  315 - Hash mapper construction time elapsed: 0.038550
+2019-12-13 17:43:30 - INFO  sequence/io/sequence_lib.cpp  :  115 - Before reading, sizeof seq_package: 88348
+2019-12-13 17:43:30 - INFO  sequence/io/sequence_lib.cpp  :  117 - After reading, sizeof seq_package: 88348
+2019-12-13 17:43:30 - INFO  localasm/local_assemble.cpp   :  324 - Read lib time elapsed: 0.000599
+2019-12-13 17:43:30 - INFO  localasm/local_assemble.cpp   :  330 - Insert size estimation time elapsed: 0.000001
+2019-12-13 17:43:30 - INFO  localasm/local_assemble.cpp   :  221 - Lib 0: total 1290 reads, aligned 60576, added 0 reads to local assembly
+2019-12-13 17:43:30 - INFO  localasm/local_assemble.cpp   :  338 - Mapping time elapsed: 0.035491
+2019-12-13 17:43:30 - INFO  localasm/local_assemble.cpp   :  232 - Minimum number of reads to do local assembly: 0
+2019-12-13 17:43:30 - INFO  localasm/local_assemble.cpp   :  346 - Local assembly time elapsed: 0.011727
+2019-12-13 17:43:30 - INFO  utils/utils.h                 :  152 - Real: 0.0871	user: 1.8600	sys: 0.0120	maxrss: 7264
+2019-12-13 17:43:30 - Extract iterative edges from k = 21 to 27 
+2019-12-13 17:43:30 - command /home/everett/software/MEGAHIT-1.2.9-Linux-x86_64-static/bin/megahit_core iterate -c /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k21.contigs.fa -b /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k21.bubble_seq.fa -t 48 -k 21 -s 6 -o /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k27/27 -r /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/reads.lib.bin
+2019-12-13 17:43:30 - INFO  main_iterate.cpp              :  190 - Selected kmer type size for k: 8
+2019-12-13 17:43:30 - INFO  main_iterate.cpp              :  174 - Read 3 contigs
+2019-12-13 17:43:30 - INFO  main_iterate.cpp              :  176 - Number of flank kmers: 5
+2019-12-13 17:43:30 - INFO  main_iterate.cpp              :  123 - Selected kmer type size for next k: 8
+2019-12-13 17:43:30 - INFO  main_iterate.cpp              :  139 - Processed: 1290, aligned: 2. Iterative edges: 3
+2019-12-13 17:43:30 - INFO  main_iterate.cpp              :  143 - Total: 1290, aligned: 2. Iterative edges: 3
+2019-12-13 17:43:30 - INFO  utils/utils.h                 :  152 - Real: 0.0387	user: 0.5920	sys: 0.0720	maxrss: 7264
+2019-12-13 17:43:30 - Build graph for k = 27 
+2019-12-13 17:43:30 - command /home/everett/software/MEGAHIT-1.2.9-Linux-x86_64-static/bin/megahit_core seq2sdbg --host_mem 1.82431833292e+11 --mem_flag 1 --output_prefix /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k27/27 --num_cpu_threads 48 -k 27 --kmer_from 21 --input_prefix /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k27/27 --addi_contig /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k21.addi.fa --local_contig /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k21.local.fa --contig /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k21.contigs.fa --bubble /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k21.bubble_seq.fa
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  148 - Preparing data...
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  369 - Number edges: 3
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  415 - Bases to reserve: 560, number contigs: 17, number multiplicity: 20
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  422 - Before reading, sizeof seq_package: 284, multiplicity vector: 20
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  428 - Read 3 edges.
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  433 - After reading, sizeof seq_package: 284/3/84, multiplicity vector: 3/20
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  458 - Read 16 contigs from /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k21.contigs.fa.
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  463 - After reading contigs, sizeof seq_package: 704/19/1966, multiplicity vector: 19/20
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  470 - Read 0 contigs from /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k21.bubble_seq.fa.
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  475 - After reading contigs, sizeof seq_package: 704/19/1966, multiplicity vector: 19/20
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  484 - Read 0 contigs from /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k21.addi.fa.
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  489 - After reading contigs, sizeof seq_package: 704/19/1966, multiplicity vector: 19/20
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  498 - Read 0 contigs from /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k21.local.fa.
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  503 - After reading contigs, sizeof seq_package: 704/19/1966, multiplicity vector: 19/20
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  508 - Finally, sizeof seq_package: 704/19/1966, multiplicity vector: 19/20
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  153 - Preparing data... Done. Time elapsed: 0.0687
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  156 - Preparing partitions and calculating bucket sizes...
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :   80 - Minimum memory required: 960 bytes
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  138 - Lv1 items: 397, Lv2 items: 144
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  140 - Memory of derived class: 784, Memory for Lv1+Lv2: 3316
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  168 - Preparing partitions and calculating bucket sizes... Done. Time elapsed: 0.0612
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  172 - Start main loop...
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 0 to 73
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0066
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0130
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 73 to 317
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0090
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0080
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 317 to 804
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0087
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0118
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 804 to 1489
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0070
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0051
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 1489 to 2174
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0025
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0065
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  186 - Lv1 scanning from bucket 2174 to 65536
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  193 - Lv1 scanning done. Large diff: 0. Time elapsed: 0.0192
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  199 - Lv1 fetching & sorting done. Time elapsed: 0.0236
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  204 - Main loop done. Time elapsed: 0.1238
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  207 - Postprocessing...
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  793 - Number of $ A C G T A- C- G- T-:
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  794 - 30 950 523 523 940 0 0 0 0
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  800 - Total number of edges: 2966
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  801 - Total number of ONEs: 2936
+2019-12-13 17:43:30 - INFO  sorting/seq_to_sdbg.cpp       :  803 - Total number of $v edges: 30
+2019-12-13 17:43:30 - INFO  sorting/base_engine.cpp       :  210 - Postprocess done. Time elapsed: 0.0466
+2019-12-13 17:43:30 - INFO  utils/utils.h                 :  152 - Real: 0.3055	user: 3.1560	sys: 0.4000	maxrss: 110168
+2019-12-13 17:43:30 - Assemble contigs from SdBG for k = 27
+2019-12-13 17:43:30 - command /home/everett/software/MEGAHIT-1.2.9-Linux-x86_64-static/bin/megahit_core assemble -s /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k27/27 -o /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k27 -t 48 --min_standalone 300 --prune_level 2 --merge_len 20 --merge_similar 0.95 --cleaning_rounds 5 --disconnect_ratio 0.1 --low_local_ratio 0.2 --cleaning_rounds 5 --min_depth 2 --bubble_level 2 --max_tip_len -1 --careful_bubble
+2019-12-13 17:43:30 - INFO  main_assemble.cpp             :  129 - Loading succinct de Bruijn graph: /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k27/27Done. Time elapsed: 0.084684
+2019-12-13 17:43:30 - INFO  main_assemble.cpp             :  133 - Number of Edges: 2966; K value: 27
+2019-12-13 17:43:30 - INFO  main_assemble.cpp             :  140 - Number of CPU threads: 48
+2019-12-13 17:43:30 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 2; Accumulated tips removed: 0; time elapsed: 0.0335
+2019-12-13 17:43:30 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 4; Accumulated tips removed: 0; time elapsed: 0.0156
+2019-12-13 17:43:30 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 8; Accumulated tips removed: 0; time elapsed: 0.0151
+2019-12-13 17:43:30 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 16; Accumulated tips removed: 0; time elapsed: 0.0141
+2019-12-13 17:43:30 - INFO  assembly/sdbg_pruning.cpp     :  160 - Removing tips with length less than 32; Accumulated tips removed: 4; time elapsed: 0.0137
+2019-12-13 17:43:30 - INFO  assembly/sdbg_pruning.cpp     :  169 - Removing tips with length less than 54; Accumulated tips removed: 18; time elapsed: 0.0155
+2019-12-13 17:43:30 - INFO  main_assemble.cpp             :  158 - Tips removal done! Time elapsed(sec): 0.127
+2019-12-13 17:43:30 - INFO  assembly/unitig_graph.cpp     :   84 - Graph size without loops: 6, palindrome: 0
+2019-12-13 17:43:30 - INFO  main_assemble.cpp             :  167 - unitig graph size: 7, time for building: 0.010
+2019-12-13 17:43:30 - INFO  assembly/contig_stat.h        :   40 - Max: 593, Min: 87, N50: 150, number contigs: 7, number isolated: 7, number looped: 1, total size: 1294,
+2019-12-13 17:43:30 - INFO  main_assemble.cpp             :  184 - Graph cleaning round 1
+2019-12-13 17:43:30 - INFO  main_assemble.cpp             :  201 - Number of bubbles removed: 0, Time elapsed(sec): 0.045
+2019-12-13 17:43:30 - INFO  main_assemble.cpp             :  211 - Number of complex bubbles removed: 0, Time elapsed(sec): 0.025325
+2019-12-13 17:43:30 - INFO  main_assemble.cpp             :  222 - Number unitigs disconnected: 0, time: 0.027
+2019-12-13 17:43:30 - INFO  main_assemble.cpp             :  246 - Unitigs removed in excessive pruning: 0, time: 0.004
+2019-12-13 17:43:30 - INFO  assembly/contig_stat.h        :   40 - Max: 593, Min: 87, N50: 150, number contigs: 7, number isolated: 7, number looped: 1, total size: 1294,
+2019-12-13 17:43:30 - INFO  main_assemble.cpp             :  267 - Time to output: 0.003860
+2019-12-13 17:43:30 - INFO  main_assemble.cpp             :  289 - Number of local low depth unitigs removed: 0, complex bubbles removed: 0, time: 0.029682
+2019-12-13 17:43:30 - INFO  assembly/contig_stat.h        :   40 - Max: 593, Min: 87, N50: 150, number contigs: 7, number isolated: 7, number looped: 1, total size: 1294,
+2019-12-13 17:43:30 - INFO  utils/utils.h                 :  152 - Real: 0.3855	user: 10.6480	sys: 0.1200	maxrss: 20396
+2019-12-13 17:43:30 - Local assembly for k = 27
+2019-12-13 17:43:30 - command /home/everett/software/MEGAHIT-1.2.9-Linux-x86_64-static/bin/megahit_core local -c /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k27.contigs.fa -l /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/reads.lib -t 48 -o /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k27.local.fa --kmax 33
+2019-12-13 17:43:30 - INFO  localasm/hash_mapper.cpp      :  100 - Number of contigs: 1, index size: 71
+2019-12-13 17:43:30 - INFO  localasm/local_assemble.cpp   :  315 - Hash mapper construction time elapsed: 0.024230
+2019-12-13 17:43:30 - INFO  sequence/io/sequence_lib.cpp  :  115 - Before reading, sizeof seq_package: 88348
+2019-12-13 17:43:30 - INFO  sequence/io/sequence_lib.cpp  :  117 - After reading, sizeof seq_package: 88348
+2019-12-13 17:43:30 - INFO  localasm/local_assemble.cpp   :  324 - Read lib time elapsed: 0.000318
+2019-12-13 17:43:30 - INFO  localasm/local_assemble.cpp   :  330 - Insert size estimation time elapsed: 0.000001
+2019-12-13 17:43:30 - INFO  localasm/local_assemble.cpp   :  221 - Lib 0: total 1290 reads, aligned 60576, added 0 reads to local assembly
+2019-12-13 17:43:30 - INFO  localasm/local_assemble.cpp   :  338 - Mapping time elapsed: 0.028728
+2019-12-13 17:43:30 - INFO  localasm/local_assemble.cpp   :  232 - Minimum number of reads to do local assembly: 0
+2019-12-13 17:43:31 - INFO  localasm/local_assemble.cpp   :  346 - Local assembly time elapsed: 0.017908
+2019-12-13 17:43:31 - INFO  utils/utils.h                 :  152 - Real: 0.0714	user: 1.5360	sys: 0.0040	maxrss: 7264
+2019-12-13 17:43:31 - Extract iterative edges from k = 27 to 33 
+2019-12-13 17:43:31 - command /home/everett/software/MEGAHIT-1.2.9-Linux-x86_64-static/bin/megahit_core iterate -c /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k27.contigs.fa -b /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/intermediate_contigs/k27.bubble_seq.fa -t 48 -k 27 -s 6 -o /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/k33/33 -r /home/everett/releases/Canine_hemophilia_AAV/validation/Linus_5KB_chr22-184021_validated/MEGAHIT_singleEnd_downstream_output/tmp/reads.lib.bin
+2019-12-13 17:43:31 - INFO  main_iterate.cpp              :  190 - Selected kmer type size for k: 8
+2019-12-13 17:43:31 - INFO  main_iterate.cpp              :  123 - Selected kmer type size for next k: 12
+2019-12-13 17:43:31 - INFO  main_iterate.cpp              :  139 - Processed: 1290, aligned: 0. Iterative edges: 0
+2019-12-13 17:43:31 - INFO  main_iterate.cpp              :  143 - Total: 1290, aligned: 0. Iterative edges: 0
+2019-12-13 17:43:31 - INFO  utils/utils.h                 :  152 - Real: 0.0483	user: 0.5040	sys: 0.0680	maxrss: 7264
+2019-12-13 17:43:31 - Merging to output final contigs 
+2019-12-13 17:43:31 - 1 contigs, total 593 bp, min 593 bp, max 593 bp, avg 593 bp, N50 593 bp
+2019-12-13 17:43:31 - ALL DONE. Time elapsed: 4.239032 seconds 

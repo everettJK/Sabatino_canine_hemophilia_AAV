@@ -1,0 +1,284 @@
+---
+fontsize: 12pt
+geometry: margin=0.50in
+subparagraph: yes
+title: Evaluation of the integration potential of a theraputic hemophilia AAV vector in canines
+date: January 2020
+author: John K. Everett, Ph.D.
+indent: false
+header-includes:
+   - \usepackage{pdflscape}
+   - \newcommand{\blandscape}{\begin{landscape}}
+   - \newcommand{\elandscape}{\end{landscape}}
+   - \usepackage{pdfpages}
+output:
+  pdf_document:
+    toc: false
+    keep_tex: no
+    latex_engine: xelatex
+---
+```{r echo = FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(kableExtra)
+library(png)
+library(grid)
+library(ggplot2)
+library(dplyr)
+library(RColorBrewer)
+library(gridExtra)
+load('data/report.RData')
+ppnum <- function(n) format(n, big.mark = ",", scientific = FALSE, trim = TRUE)
+```
+
+Genomic DNA samples were sonically sheared after which adapter sequence with sample specific barcodes were appended. 
+Genomic fragments possessing remnants of AAV ITR sequences were preferentially amplified with a nested PCR protocol 
+where primer sequences bound to the interior edge of ITR sequences and sheared adapter sequences. Amplified fragments 
+were sequenced with the Illuminia MiSeq platform and analyzed with software developed specifically for this investigation. 
+Genomic fragment read pairs which met a number of criteria (read quality, presence of an interior ITR sequence, 
+proper paired-end read alignment to canine genome, ect.) were accepted and used to identify AAV incorporation locations 
+and gauge the number of cells harboring each incorporations by using the number of unique sonic breaks associated with 
+each position as an lower end estimate for abundance. Incorporations within 100 nucleotides of one another with reads 
+aligning to opposite strands were considered the duel detection of a single incorporation where the interior edges of 
+both 5’ and 3’ ITR sequences were present.   
+
+\vspace{1.0cm}
+
+\small
+Figure 1. Sheared genomic fragment sequencing strategy. A single sequencing primer binds to the interior edge of AAV 5' and 3' ITR sequences and sequences outward towards genomic sequences. A second set of primers sequence inward from sheared genomic break points. The 5' and 3' ITR sequencing reactions yield different ITR sequences: reverse compliment of A, C', C, B, B', A' and A, B, B', C', C, A' respectively. The difference in observed ITR sequences suggests a double stranded AAV intermediate with breaks within its ITR structures. 
+
+\normalsize
+
+```{r Figure1, fig.height=5, echo=FALSE, fig.align='center'}
+img <- readPNG("tables_and_figures/AAVseqMethod1.png")
+grid.raster(img)
+```
+
+\newpage
+
+\small
+Figure 2. Distribtion of ITR break points colored by (A) inferred sequencing direction and (B) clonal abundance.
+\normalsize
+
+\vspace{1.0cm}
+A.
+```{r, fig.height=4, echo=FALSE, fig.align='center'}
+report$ITR.direction.plot
+```
+
+\vspace{0.5cm}
+
+B.
+```{r, fig.height=4, echo=FALSE, fig.align='center'}
+report$ITR.abundance.plot
+```
+
+\newpage
+
+\small
+Figure 3. Clones with abundances $\geq$ 5 cells (only most abundant 15 clones shown from each dog) where 
+the sampled liver lobe number is shown at the end of each bar.  Positions where alignment strands are 
+denoted with an asterisk, i.e., chr25*34591227, denote dually detected incorporations
+\normalsize
+
+\vspace{1.0cm}
+
+```{r, fig.width = 9, fig.height = 9, echo=FALSE, fig.align='center'}
+report$abundantClones_gte5
+```
+
+\newpage
+
+\small
+Figure 4. Schematic of incorperated AAV fragments identified vis PCR with flanking genomic primers and Nextera sequencing. 
+\normalsize
+
+\vspace{1.0cm}
+
+```{r, fig.height=5, echo=FALSE, fig.align='center'}
+img <- readPNG("tables_and_figures/AAV_frags1.png")
+grid.raster(img)
+```
+
+\newpage
+
+
+\small
+Figure 5. Comparisons of 1 million randomly drawn sites to experimental sites (sites within Factor VIII excluded). 
+A. Distribution of percentages of randomly drawn sites found within transcription units where the percentage of experimental 
+sites is shown with a blue dot (p-value: 0). B. Percentage of randomly drawn sites found within oncogenes 
+where the experimental value bin is highlighted blue (p-value: `r 1-oncoPval`).
+\normalsize
+
+\vspace{0.5cm}
+A.  
+
+```{r, fig.height = 4, fig.width = 7.5, echo=FALSE, fig.align='center'}
+report$inTU.randomTest
+```
+
+\vspace{1.0cm}
+
+B.  
+```{r, fig.height = 4, fig.width = 7.5, echo=FALSE, fig.align='center'}
+report$inTU.randomOncoGeneTest
+```
+
+\newpage
+
+\small
+Figure 6. Correlation between VCN and number of sites recovered. Sites within Factor VIII were included because VCN and sample masses are whole sample parameters (R^2^: `r sprintf("%.3f", report$VCNvsInts_rSquared)`, p-value: `r formatC(report$VCNvsInts_modelPval, format = "e", digits = 2)`).
+\normalsize
+
+\vspace{2.0cm}
+
+```{r, fig.height=7, echo=FALSE, fig.align='center'}
+report$VCNvsMassIntSites 
+```
+
+\newpage
+
+\small
+Figure 7. Incorperations within Factor VIII. All incorperations (data points are randomly jittered vertically for clarity, colored by dog with 
+different shapes denoting forward vs. reverse alignments to the genome, tick marks placed every 50NT) are within exons. 
+Sequenced genomic fragments do not extend into Factor VIII introns. This strongly suggests that these detections are 
+from multiply self-incorporated AAVs which may or may not be incorporated into the host genome. Exon 14 shows no incorperations within 
+its center because this region of the exon was exluded from the transgene.
+\normalsize
+
+\vspace{0.5cm}
+
+```{r, fig.width=9, fig.height = 9, echo=FALSE, fig.align='center'}
+grid.arrange(grobs = F8sites.plots,  ncol = 4)
+```
+
+\newpage
+
+\small
+Figure 8. Genomic heatmap of incorporations exluding F8 sites.  
+  
+(This analysis differs from the random draw test in two ways: the heat map uses the sparsely annotated canFam3 genome annotations rather than the canFam3-hg38 xenoref annotations and random positions are not checked to see if they are 'N'.)  
+\normalsize
+
+\vspace{2.0cm}
+
+```{r, fig.height=7, echo=FALSE, fig.align='center'}
+report$genomicHeatmap$gen_plot + theme(text = element_text(size=12))
+```
+
+\newpage
+
+\small
+Figure 9. Visulization of incorperation locations.
+\normalsize
+\vspace{1.0cm}
+
+```{r, fig.height=9, echo=FALSE, fig.align='center'}
+report$genomeMap
+```
+
+\newpage
+
+**Incorperations within AAV**  
+\vspace{0.5cm}
+
+Incorperations within AAV itself have the tell-tale alignment structure: *expected ITR remnant, 
+additional vector NTs which do not align to the genome followed by NTs which do align to the genome* (Figure 9).
+
+\vspace{0.5cm}  
+
+\small
+Figure 10. Example of an incorporation within AAV within the poly-A signal sequence.
+\normalsize
+```{r, fig.height=3, echo=FALSE, fig.align='center'}
+img <- readPNG("tables_and_figures/aavIncPolyA.png")
+grid.raster(img)
+```
+\vspace{0.5cm}  
+
+The large majority of incorporations have little to no additional NTs between ITR sequence 
+remnants and genomic sequences (Figure 10) though there are a notable number of 
+incorporations which do possess a number of additional NTs. 
+
+\vspace{0.5cm} 
+
+\small
+Figure 11. Instances of additional NTs between ITR sequences and genomic sequences.
+\normalsize
+
+```{r, fig.height=4, fig.width = 9, echo=FALSE, fig.align='center'}
+report$additionaNTplot
+```
+\vspace{0.5cm}
+
+These additional NT sequences can be clustered and the top 15 cluster representative sequences 
+are shown in Tables 1 and 2. Incorporations which map to Factor VIII are interesting in that 
+the additional NTs are often Factor VIII exon boundaries. These NTs are called as additional NTs 
+because sequence aligners expect intron sequences which are not present in the vector transgene. 
+Occasionally a common genome locus is the source of additional NTs for distant incorporation events (Figure 11).
+\newpage
+
+\small
+Figure 11. Example of additional NTs where the additional NTs are from a common genome locus 
+yet map to distant parts of the genome.
+\normalsize
+
+\vspace{0.5cm}
+
+```{r, fig.height=3, echo=FALSE, fig.align='center'}
+img <- readPNG("tables_and_figures/additionalNTexample1.png")
+grid.raster(img)
+```
+
+\vspace{1.0cm}
+
+\small
+Table 1. Common additional NT sequences associated with incorporation *within Factor VIII*.
+\normalsize
+
+\vspace{1.0cm}
+```{r, echo=FALSE}
+t <- extraNT_Table1[,c(1,2,5)]
+names(t) <- c('n Sites', 'Rep. cluster seq', 'Desc.')
+
+kable(t, "latex", longtable = T, linesep = "", booktabs = T) %>%
+  kable_styling(font_size = 9)
+```
+
+\vspace{0.5cm}
+\small
+Table 2. Common additional NT sequences associated with incorporation *outside Factor VIII*.
+\normalsize
+```{r, echo=FALSE}
+t <- extraNT_Table2[,c(1,2,5)]
+names(t) <- c('n Sites', 'Rep. cluster seq', 'Desc.')
+
+kable(t, "latex", longtable = T, linesep = "", booktabs = T) %>%
+  kable_styling(font_size = 9)
+```
+
+\newpage
+
+\small
+Table 3. `r ppnum(n_distinct(expIntSites.abund.gte2.noF8$posid))` incorporations with two or more unqiue clones identified. A total of `r ppnum(n_distinct(expIntSites.noF8$posid))`  unqiue incorporations excluding incorperations within Factor VIII were identified. Positions where alignment strands are denoted with an asterisk, i.e., chr25*34591227, denote dually detected incorporations. The highest level of validation for each incorporation is provided:   
+
+\vspace{0.5cm}  
+
+**Short PCR**: presence of an appropriate size PCR product when amplifying from the internal edge of an ITR to flanking genomic DNA. 
+**Sanger**: successful sequencing and sequence conformation of the short PCR test product. 
+**Long PCR**: presence of a considerably larger PCR product then expected when amplifying a region of the genome with PCR primers flanking a suspected incorporation site. 
+**Nextera**:  successful sequencing and sequence conformation of the long PCR test product.  
+\normalsize
+
+\vspace{0.5cm}
+
+```{r, echo=FALSE}
+report$sitesTable$`Nearest Gene` <- sub('R2L5,OR2L3,OR2L8,OR2L2,OR2L1P', 'R2L5,OR2L3,OR2L8...', report$sitesTable$`Nearest Gene`)
+report$sitesTable$`Nearest Gene` <- sub('JAG2,PACS2,TMEM121', 'JAG2,PACS2...', report$sitesTable$`Nearest Gene`)
+
+kable(report$sitesTable, "latex", longtable = T, linesep = "", booktabs = T) %>%
+  kable_styling(font_size = 7, latex_options = c("repeat_header")) %>%
+  column_spec(4, width = "1cm") %>%
+  column_spec(5, width = "1.5cm") 
+```
+
+
