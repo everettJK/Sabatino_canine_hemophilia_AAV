@@ -1,0 +1,5 @@
+Fri Jan 10 14:40:42 2020
+[11.6 minutes]	Removin multi-hit read pairs (3169 read pairs).
+[27.0 minutes]	Removing read pairs which share random linker IDs between samples.
+[27.4 minutes]	Removed 2.86% of fragment reads because one or more other reads shared the same random linker sequence.
+[40.4 minutes]	Starting fragment creation in LTR/ITR capture mode.

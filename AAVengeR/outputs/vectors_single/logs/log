@@ -1,0 +1,48 @@
+Wed Jan  8 22:36:03 2020
+[3.5 minutes]	Sample chunking completed.
+[3.5 minutes]	Starting Gloay correction, resetting timer.
+[2.7 minutes]	Gloay correction completed.
+[2.7 minutes]	Starting sample chunk threads, resetting timer.
+[9.1 minutes]	Chunk 38 completed.
+[16.1 minutes]	Chunk 18 completed.
+[16.2 minutes]	Chunk 15 completed.
+[16.3 minutes]	Chunk 19 completed.
+[16.4 minutes]	Chunk 3 completed.
+[16.4 minutes]	Chunk 14 completed.
+[16.4 minutes]	Chunk 16 completed.
+[16.4 minutes]	Chunk 17 completed.
+[16.5 minutes]	Chunk 11 completed.
+[16.5 minutes]	Chunk 7 completed.
+[16.6 minutes]	Chunk 10 completed.
+[16.6 minutes]	Chunk 32 completed.
+[16.6 minutes]	Chunk 9 completed.
+[16.6 minutes]	Chunk 2 completed.
+[16.6 minutes]	Chunk 34 completed.
+[16.6 minutes]	Chunk 13 completed.
+[16.7 minutes]	Chunk 6 completed.
+[16.7 minutes]	Chunk 31 completed.
+[16.8 minutes]	Chunk 5 completed.
+[16.8 minutes]	Chunk 12 completed.
+[16.8 minutes]	Chunk 35 completed.
+[16.8 minutes]	Chunk 23 completed.
+[16.8 minutes]	Chunk 30 completed.
+[16.8 minutes]	Chunk 36 completed.
+[16.8 minutes]	Chunk 8 completed.
+[16.9 minutes]	Chunk 1 completed.
+[16.9 minutes]	Chunk 37 completed.
+[16.9 minutes]	Chunk 4 completed.
+[16.9 minutes]	Chunk 20 completed.
+[17.0 minutes]	Chunk 33 completed.
+[17.0 minutes]	Chunk 27 completed.
+[17.0 minutes]	Chunk 26 completed.
+[17.1 minutes]	Chunk 22 completed.
+[17.1 minutes]	Chunk 29 completed.
+[17.1 minutes]	Chunk 21 completed.
+[17.1 minutes]	Chunk 28 completed.
+[17.1 minutes]	Chunk 24 completed.
+[17.2 minutes]	Chunk 25 completed.
+[19.4 minutes]	Removin multi-hit read pairs (8786 read pairs).
+[19.4 minutes]	Removing read pairs which share random linker IDs between samples.
+[19.6 minutes]	Removed 2.12% of fragment reads because one or more other reads shared the same random linker sequence.
+[21.1 minutes]	Starting fragment creation in LTR/ITR capture mode.
+[23.3 minutes]	done.

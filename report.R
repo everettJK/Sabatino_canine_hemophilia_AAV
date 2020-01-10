@@ -5,7 +5,6 @@ library(tidyverse)
 library(scales)
 library(RColorBrewer)
 library(xlsx)
-source('lib.R')
 Rscript_path <- '/home/opt/R-3.4.0/bin/Rscript'
 
 # Create experimental data save file from the AAVengerR output file.
@@ -68,9 +67,6 @@ intSites[apply(d, 1, function(x){ which(intSites$sample == x[1] & intSites$posid
 # })
 # dualDetection[sapply(dualDetection, is.null)] <- NULL
 
-# subset(intSites, posid %in% c('chr4+14681204', 'chr4-14681249'))
-# GTSP2168,chr4-14681249,chr4+14681204,22
-
 
 # Read in the duel detection table created with the code block above 
 # and merge sites into the mean position.
@@ -117,6 +113,10 @@ expSitesInTU.inOnco  <- n_distinct(expIntSites.noF8.inTU.inOncogene$posid) / n_d
 
 
 createColorPalette <- function(n) grDevices::colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))(n)
+
+
+
+
 
 # ITR plots.
 #--------------------------------------------------------------------------------------------------
@@ -527,41 +527,106 @@ report$genomicHeatmap <- within(
 
 
 ggsave(report$genomicHeatmap$gen_plot, file = 'tables_and_figures/genomicHeatMap.pdf')
-
 file.remove(c('sites_mrcs.gen', 'samples', 'sites'))
 
-g <- subset(gt23::canFam3.refSeqGenesGRanges, name2 == 'F8')
-d <- tibble(exonStarts = strsplit(g$exonStarts, ","), exonEnds = strsplit(g$exonEnds, ","))
-d <- unnest(d, exonStarts = d$exonStarts, exonEnds = d$exonEnds)
 
 
-F8sites.plots <- rev(lapply(1:nrow(d), function(n){
-  x <- d[n,]
-  x$exonStarts <- as.integer(x$exonStarts)
-  x$exonEnds <- as.integer(x$exonEnds)
-  o <- subset(intSites, start >= x$exonStarts & start <= x$exonEnds)
+# chr25  34587595  read num?
+
+# Integrations within vectors and genomic exons.
+#--------------------------------------------------------------------------------------------------
+
+createF8exonPlots <- function(sites){
+  g <- subset(gt23::canFam3.refSeqGenesGRanges, name2 == 'F8')
+  d <- tibble(exonStarts = strsplit(g$exonStarts, ","), exonEnds = strsplit(g$exonEnds, ","))
+  d <- unnest(d, exonStarts = d$exonStarts, exonEnds = d$exonEnds)
   
-  ggplot(o, aes(start, 0, fill = subject, shape = strand)) + 
-    theme_bw() +
-    scale_shape_manual(values = c(21, 24)) +
-    scale_fill_manual(name = 'Dog', values = colorRampPalette(brewer.pal(12, "Paired"))(6)) +
-    geom_point(size = 2, position = position_jitter(width = 0, height = 0.1)) +
-    scale_x_continuous(breaks = round(seq(min(o$start), max(o$start), by = 50),1)) +
-    labs(x = '', y = '') +
-    ggtitle(paste('Exon ', 27 - n, ', ', sprintf("%.1f", (x$exonEnds - x$exonStarts)/1000), ' KB')) +
-    theme(legend.position="none",
-          panel.border = element_blank(), panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
-          axis.title.y=element_blank(),
-          axis.text.y=element_blank(),
-          axis.ticks.y=element_blank(),
-          axis.title.x=element_blank(),
-          axis.text.x=element_blank(),
-          plot.title = element_text(size = 10, face = 'bold'),
-          axis.ticks.length = unit(0.3, "cm"))
-}))
+  rev(lapply(1:nrow(d), function(n){
+    x <- d[n,]
+    x$exonStarts <- as.integer(x$exonStarts)
+    x$exonEnds <- as.integer(x$exonEnds)
+    o <- subset(sites, start >= x$exonStarts & start <= x$exonEnds)
+    
+    if(nrow(o) == 0) return(ggplot())
+    
+    ggplot(o, aes(start, 0, fill = strand)) + 
+      theme_bw() +
+      scale_fill_manual(values = c('dodgerblue2', 'gold2')) +
+      geom_point(size = 1.5, shape = 21, position = position_jitter(width = 0, height = 0.1)) +
+      #scale_x_continuous(breaks = round(seq(min(o$start), max(o$start), by = 50),1), sec.axis = dup_axis()) +
+      scale_x_continuous(sec.axis = dup_axis(), expand = c(.1, .1)) +
+      scale_y_continuous(sec.axis = dup_axis(), expand = c(.01, .01)) +
+      labs(x = '', y = '') +
+      # ggtitle(paste('Exon ', 27 - n, ', ', sprintf("%.1f", (x$exonEnds - x$exonStarts)/1000), ' KB')) +
+      theme(legend.position="none",
+            panel.border = element_blank(), 
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(), 
+            axis.line = element_line(colour = "black"),
+            axis.title.y = element_blank(),
+            axis.text.y = element_blank(),
+            axis.ticks.x = element_blank(),
+            axis.ticks.y = element_blank(),
+            axis.title.x = element_blank(),
+            axis.text.x = element_blank()
+            # plot.title = element_text(size = 10, face = 'bold'),
+            # axis.ticks.length = unit(0.3, "cm")
+            )
+  }))
+}
 
-ggsave(gridExtra::grid.arrange(grobs = F8sites.plots,  ncol = 4), file = 'tables_and_figures/f8_exon_sites.pdf', height = 10, width = 8, units = 'in')
+createVectorExonPlots <- function(vectorSitesFile, exons){
+  vectorSites <- new.env()
+  load(vectorSitesFile, envir = vectorSites)
+  
+  vectorPlotData <- tibble(subject = sub('^p', '', vectorSites$sites$subject),
+                           position = vectorSites$sites$start, 
+                           strand = vectorSites$sites$strand)
+  
+  vectorPlot <- 
+    ggplot(vectorPlotData, aes(position, 0, fill = strand)) + 
+    theme_bw()+
+    scale_fill_manual(values = c('dodgerblue2', 'gold2')) +
+    geom_jitter(height = 0.75, width = 0, shape = 21, color = 'black') +
+    ylim(-3,3) +
+    facet_grid(subject~., switch = "y") +
+    theme(legend.position="none",
+          strip.text.y = element_text(angle = 180),
+          strip.background = element_blank(),
+          panel.border = element_blank(), panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(), axis.line = element_blank(),
+          axis.title.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(),
+          axis.title.x = element_blank(), axis.text.x = element_blank(), axis.ticks.x = element_blank())
+  
+  return(c(list(vectorPlot), lapply(unique(vectorPlotData$subject), function(x){
+         gridExtra::arrangeGrob(grobs = createF8exonPlots(subset(intSites, subject == x))[exons],  ncol = 7)  
+  })))
+}
+
+# Use grid::grid.draw() to view brob layouts.
+
+library(grid)
+library(gridExtra)
+set.seed(42)
+single_vectorExon_plots <- arrangeGrob(grobs = createVectorExonPlots('AAVengeR/outputs/vectors_single/sites.RData', 11:17), 
+                                       layout_matrix = rbind(c(1,1,1,1,1,1,1),c(1,1,1,1,1,1,1), c(1,1,1,1,1,1,1),  c(1,1,1,1,1,1,1),
+                                                             c(NA,2,2,2,2,2,NA), c(NA,3,3,3,3,3,NA), c(NA,4,4,4,4,4,NA)))
+ggsave(single_vectorExon_plots, file = 'tables_and_figures/singleVector_genomicExonHits.pdf', height = 8, width = 11, units = 'in')
+  
+
+
+# All exons are expected to be covered in the split chain experiments since the entire subject
+# light + heavy chain is data is being used.
+light_vectorExon_plots <- arrangeGrob(grobs = createVectorExonPlots('AAVengeR/outputs/vectors_light/sites.RData', 11:17), 
+                                       layout_matrix = rbind(c(1,1,1,1,1,1,1),c(1,1,1,1,1,1,1), c(1,1,1,1,1,1,1),
+                                                             c(NA,2,2,2,2,2,NA), c(NA,3,3,3,3,3,NA), c(NA,4,4,4,4,4,NA)))
+
+
+heavy_vectorExon_plots <- arrangeGrob(grobs = createVectorExonPlots('AAVengeR/outputs/vectors_heavy/sites.RData', 11:17), 
+                                      layout_matrix = rbind(c(1,1,1,1,1,1,1),c(1,1,1,1,1,1,1), c(1,1,1,1,1,1,1),
+                                                            c(NA,2,2,2,2,2,NA), c(NA,3,3,3,3,3,NA), c(NA,4,4,4,4,4,NA)))
+
+
 
 
 
@@ -636,6 +701,20 @@ intSites <- rowwise(intSites) %>%
             mutate(LTRseqAdditionNTs = substr(LTRseq2sRep, nchar(LTRseqsRep) + 1, nchar(LTRseq2sRep)),
                    nLTRseqAdditionNTs = nchar(LTRseqAdditionNTs)) %>%
             ungroup()
+
+
+# # ----
+# 200
+# 
+# R2 <- ShortRead::readFastq('data/sequencingData/Undetermined_S0_L001_R2_001.fastq.gz')
+# R2.ids <- sub('\\s+.+$', '', as.character(R2@id))
+# z <- R2[grep("M03249:365:000000000-C3CH4:1:2108:13566:12043", R2.ids)]
+# 
+# 
+# o <- subset(intSites, nLTRseqAdditionNTs >= 100)
+# # chr11-74119396
+
+#-----
 
 intSites$s <- paste(intSites$posid2, intSites$subject, intSites$LTRseq2sRep)
 d <- intSites[! duplicated(intSites$s),]

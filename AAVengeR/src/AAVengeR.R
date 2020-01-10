@@ -15,7 +15,7 @@ if(! file.exists(configFile)) stop('Error -- configuration file not found.')
 config  <- read_yaml(configFile)
 
 #config <- read_yaml('/home/everett/releases/Canine_hemophilia_AAV/AAVengeR/configs/Sabatino.config')
-#config <- read_yaml('/home/everett/releases/Sabatino_canine_hemophilia_AAV/AAVengeR/configs/Sabatino.config')
+#config <- read_yaml('AAVengeR/configs/Sabatino.config')
 
 
 # Add a function to check over config file and indentify conflicting parameters...
@@ -426,6 +426,11 @@ alignments <- bind_rows(lapply(split(d, paste(d$source, d$refGenomeBLATdb)), fun
 
 save(alignments, file = file.path(config$outputDir, 'alignments.RData'))
 
+# dev
+# alignments$stdIDs <- unlist(lapply(stringr::str_split(alignments$ids, '\\|'), '[[', 1))
+# testReads <- c('M03249:365:000000000-C3CH4:1:1102:8488:3396','M03249:365:000000000-C3CH4:1:1103:20495:10111','M03249:365:000000000-C3CH4:1:2107:23911:7086','M03249:365:000000000-C3CH4:1:1114:13638:2181','M03249:365:000000000-C3CH4:1:1109:15721:22900','M03249:365:000000000-C3CH4:1:2111:10556:13601','M03249:365:000000000-C3CH4:1:2102:16447:10185')
+# testReads %in% alignments$stdIDs
+
 
 # Apply generic alignment filters.
 alignments <- 
@@ -515,6 +520,10 @@ if(config$filter.removeMultiHitReadPairs){
 
 frags <- mutate(frags, fragID = paste0(uniqueSample, ';', tName.virusReads, ';', strand.virusReads, ';', fragStart, ';', fragEnd))
   
+
+# dev
+# testReads %in% frags$readID
+
 if(config$removeReadFragsWithSameRandomID){
   
   logMsg(config, 'Removing read pairs which share random linker IDs between samples.', logFile)
@@ -540,6 +549,8 @@ if(config$removeReadFragsWithSameRandomID){
   frags <- subset(frags, samplesPerRandomSeqID == 1)
 }
 
+
+# Use BWA to create align selected reads as a check.
 createFragReadAlignments(config, samples, frags)
 
 save(frags, file = file.path(config$outputDir, 'readFrags.RData'))
@@ -570,6 +581,9 @@ if(config$virusReads.captureLTRseqs){
     summarise(reads = n(), readIDs = list(readID), LTRseqs = list(LTRseq), LTRseq2s = list(LTRseq2)) %>%
     ungroup() %>%
     separate(fragID, c('uniqueSample', 'seqnames', 'strand', 'start', 'end'), sep = ';') 
+  
+  # Dev
+  # z <- frags[unlist(lapply(frags$readIDs,function(x) any(testReads %in% x))),]
   
   
   # Identify representative LTR sequences for each fragment.
@@ -603,6 +617,11 @@ if(config$virusReads.captureLTRseqs){
   g <- unlist(GRangesList(parLapply(cluster, split(g, g$s), function(x) gintools::refine_breakpoints(x, counts.col = 'reads')))) 
   
   
+  # dev
+  # z <- g[unlist(lapply(g$readIDs,function(x) any(testReads %in% x)))]
+  # data.frame(z)[, c('seqnames', 'strand', 'start', 'end', 'reads', 'readIDs')]
+  
+  
   if(config$standardizeSitesBy == 'replicate'){
     g$s <- g$uniqueSample
   } else if (config$standardizeSitesBy == 'sample'){
@@ -611,24 +630,17 @@ if(config$virusReads.captureLTRseqs){
     g$s <- g$subject
   }
   
-  # There appears to be a ~ 10,000 site limit for standardize sites.
-  # Create a 10K splitting vector to use if sites exceed 10K. 
-  # This is not an ideal patch because all sites from a subject should be normalized together.
+  g <- unlist(GRangesList(lapply(split(g, g$s), function(x) gintools::standardize_sites(x, counts.col = 'reads'))))
   
-  #g <- unlist(GRangesList(parLapply(cluster, split(g, g$s), function(x){
-  g <- unlist(GRangesList(lapply(split(g, g$s), function(x){
-         if(length(x) <= 10000){
-           return(gintools::standardize_sites(x, counts.col = 'reads'))
-         } else {
-           message('   Applying standardize_sites() patch for large number of sites.')
-           i <- unlist(lapply(1:10000, function(i) rep(i, 10000)))
-           x$s <- i[1:length(x)]
-           return(unlist(GRangesList(lapply(split(x, x$s), function(x2) gintools::standardize_sites(x2, counts.col = 'reads')))))
-         }
-       }))) 
+  # dev
+  # z <- g[unlist(lapply(g$readIDs,function(x) any(testReads %in% x)))]
+  # data.frame(z)[, c('seqnames', 'strand', 'start', 'end', 'reads', 'readIDs')]
   
   f <- select(data.frame(g), -LTRseqs, -LTRseq2s, -width, -uniqueSample, -s)
-
+  
+  # dev
+  # save.image(file = '~/d.img')
+  
   frags <- bind_rows(parLapply(cluster, split(f, paste(f$subject, f$sample, f$seqnames, f$start, f$end, f$strand)), function(x){
              source(file.path(config$softwareDir, 'AAVengeR.lib.R'))
              library(stringdist)
