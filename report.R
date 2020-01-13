@@ -133,13 +133,13 @@ ITRplotSetup <-
   list(theme_bw(),
        scale_x_continuous(),
        theme(panel.grid.major.x = element_blank(),
-             panel.grid.minor.x = element_blank()),
-       theme(axis.text.x = element_text(angle = 90, hjust = 1)),
-             geom_segment(data = ITRplot.ITRline, aes(x = x1, y = y, xend = x2, yend = y), inherit.aes = FALSE),
-             geom_segment(data = ITRplot.ITRticks, aes(x = x, y = y1, xend = x, yend = y2), inherit.aes = FALSE),
-             geom_segment(data = ITRplot.ITRtips, aes(x = x, xend = x, y = y1, yend = y2), inherit.aes = FALSE, linetype = 'dotted'),
-             annotate("text", x = ITRplot.ITRlabelsPos, y = ITRplot.ITRlabelsHeight, label = ITRplot.ITRlabels),
-             labs(x = 'ITR NTs', y = 'Integrations'))
+             panel.grid.minor.x = element_blank(),
+             axis.text.x = element_text(angle = 90, hjust = 1)),
+        geom_segment(data = ITRplot.ITRline,  aes(x = x1, y = y,  xend = x2, yend = y),  inherit.aes = FALSE),
+        geom_segment(data = ITRplot.ITRticks, aes(x = x,  y = y1, xend = x,  yend = y2), inherit.aes = FALSE),
+        geom_segment(data = ITRplot.ITRtips,  aes(x = x,  y = y1, xend = x,  yend = y2), inherit.aes = FALSE, linetype = 'dotted'),
+        annotate("text", x = ITRplot.ITRlabelsPos, y = ITRplot.ITRlabelsHeight, label = ITRplot.ITRlabels),
+        labs(x = 'ITR NTs', y = 'Integrations'))
 
 report <- list()
 
@@ -158,6 +158,43 @@ report$ITR.direction.plot <-
         legend.title=element_text(size = 14), legend.text=element_text(size = 12))
 
 ggsave(report$ITR.direction.plot, file = 'tables_and_figures/ITR.direction.plot.pdf')
+
+
+
+
+ann_text <- data.frame(label      = c("A", "B", "B'", "C'", "C", "A'",    "A", "C'", "C", "B", "B'", "A'",  "A"),
+                       LTRseqName = factor(c("3'", "3'", "3'", "3'", "3'", "3'",  "5'","5'","5'","5'","5'","5'", "Unknown"), levels = c("3'","5'","Unknown")),
+                       x = c(14, 32, 44, 53, 63, 81, 14, 32, 44, 53, 63, 81, 14), y = 105)
+
+report$ITR.abundanceDirection.plot <-
+  mutate(expIntSites.noF8, ITRnts = nchar(LTRseqsRep) - ITRplot.shiftVal) %>%
+  mutate(abundBin = cut(estAbund, breaks = c(0, 5, 10, 50, max(expIntSites.noF8$estAbund)))) %>%
+  select(subject, abundBin, LTRseqName, estAbund, ITRnts) %>%
+  group_by(LTRseqName, abundBin, ITRnts) %>%
+  summarise(nSites = n()) %>%
+  ungroup() %>%
+  mutate(abundBin = recode(abundBin, '(0,5]' = '1 - 5', '(5,10]' = '6 - 10', '(10,50]' = '11 - 50', '(50,131]' = ' 51 - 131')) %>%
+  mutate(LTRseqName = recode(LTRseqName, u = "Unknown", "5p" = "5'", "3p" = "3'")) %>%
+  mutate(LTRseqName = factor(as.character(LTRseqName), levels = c('Unknown', "5'", "3'"))) %>%
+  ggplot(aes(ITRnts, nSites, fill = abundBin)) +
+  theme_bw() +
+  geom_col(color = 'black', size = 0.25) +
+  scale_fill_manual(name = 'Abundance', values = c('goldenrod2', 'dodgerblue', 'mediumseagreen', 'red')) + 
+  facet_grid(LTRseqName~.) +
+  geom_segment(data = ITRplot.ITRline, aes(x = x1, y = y, xend = x2, yend = y), inherit.aes = FALSE) +
+  geom_segment(data = ITRplot.ITRticks, aes(x = x, y = y1, xend = x, yend = y2), inherit.aes = FALSE) +
+  geom_segment(data = ITRplot.ITRtips, aes(x = x, xend = x, y = y1, yend = y2), inherit.aes = FALSE, linetype = 'dotted') +
+  geom_text(data = ann_text, aes(label = label, x = x, y = y), hjust = 0, inherit.aes = FALSE) +
+  labs(x = 'ITR position', y = 'Number of Integrations') +
+  theme(axis.text=element_text(size=12), axis.title=element_text(size=14), legend.text=element_text(size=14), legend.title =element_text(size=14),
+        strip.text.y = element_text(size = 12, angle = 0),
+        strip.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+ggsave(report$ITR.abundanceDirection.plot, file = 'tables_and_figures/ITR.abundanceDirection.plot.pdf')
+
+
 
 
 report$ITR.abundance.plot <- 
@@ -552,7 +589,7 @@ createF8exonPlots <- function(sites){
     ggplot(o, aes(start, 0, fill = strand)) + 
       theme_bw() +
       scale_fill_manual(values = c('dodgerblue2', 'gold2')) +
-      geom_point(size = 1.5, shape = 21, position = position_jitter(width = 0, height = 0.1)) +
+      geom_point(size = 3, shape = 21, position = position_jitter(width = 0, height = 0.1)) +
       #scale_x_continuous(breaks = round(seq(min(o$start), max(o$start), by = 50),1), sec.axis = dup_axis()) +
       scale_x_continuous(sec.axis = dup_axis(), expand = c(.1, .1)) +
       scale_y_continuous(sec.axis = dup_axis(), expand = c(.01, .01)) +
@@ -587,7 +624,7 @@ createVectorExonPlots <- function(vectorSitesFile, exons){
     ggplot(vectorPlotData, aes(position, 0, fill = strand)) + 
     theme_bw()+
     scale_fill_manual(values = c('dodgerblue2', 'gold2')) +
-    geom_jitter(height = 0.75, width = 0, shape = 21, color = 'black') +
+    geom_jitter(size = 3, height = 0.75, width = 0, shape = 21, color = 'black') +
     ylim(-3,3) +
     facet_grid(subject~., switch = "y") +
     theme(legend.position="none",
@@ -613,6 +650,23 @@ single_vectorExon_plots <- arrangeGrob(grobs = createVectorExonPlots('AAVengeR/o
                                                              c(NA,2,2,2,2,2,NA), c(NA,3,3,3,3,3,NA), c(NA,4,4,4,4,4,NA)))
 ggsave(single_vectorExon_plots, file = 'tables_and_figures/singleVector_genomicExonHits.pdf', height = 8, width = 11, units = 'in')
   
+
+z <- createVectorExonPlots('AAVengeR/outputs/vectors_single/sites.RData', 11:17)
+
+
+grid.draw(arrangeGrob(grobs = z, 
+            layout_matrix = rbind(c(1,1,1,1,1,1,1),c(1,1,1,1,1,1,1), c(1,1,1,1,1,1,1), 
+                                  c(NA,2,2,2,2,2,NA), c(NA,3,3,3,3,3,NA), c(NA,4,4,4,4,4,NA))))
+
+
+ggsave(z, file = 'tables_and_figures/singleVector_genomicExonHits.pdf', height = 8, width = 11, units = 'in')
+
+
+
+
+
+
+
 
 
 # All exons are expected to be covered in the split chain experiments since the entire subject
