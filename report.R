@@ -112,9 +112,33 @@ expIntSites.noF8.percentNearOnco    <- n_distinct(expIntSites.noF8.nearOncogene$
 expSitesInTU.inOnco  <- n_distinct(expIntSites.noF8.inTU.inOncogene$posid) / n_distinct(expIntSites.noF8.inTU$posid)
 
 
+# Manuscript stats
+
+o <- group_by(expIntSites.noF8, experimentType, subject) %>%
+     summarise(nSites = n_distinct(posid)) %>%
+     ungroup()
+wilcox.test(subset(o, experimentType == 'SingleChain')$nSites, subset(o, experimentType == 'SplitChain')$nSites)$p.value
+
+o <- group_by(expIntSites.noF8, experimentType, subject, sample) %>%
+     summarise(nSitesMassNormalized = n_distinct(posid) / sampleMass[1]) %>%
+     ungroup()
+wilcox.test(subset(o, experimentType == 'SingleChain')$nSitesMassNormalized, subset(o, experimentType == 'SplitChain')$nSitesMassNormalized)$p.value
+
+
+vectorSitesSingle <- new.env()
+load('AAVengeR/outputs/vectors_single/sites.RData', envir = vectorSitesSingle)
+inDogSingle <- subset(expIntSites.noF8, experimentType == 'SingleChain')
+percentInVector <- n_distinct(vectorSitesSingle$sites$posid) / (n_distinct(vectorSitesSingle$sites$posid) + n_distinct(inDogSingle$posid))
+percentInDog <-  n_distinct(inDogSingle$posid)/ (n_distinct(vectorSitesSingle$sites$posid) + n_distinct(inDogSingle$posid))
+
 createColorPalette <- function(n) grDevices::colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))(n)
 
 
+
+
+#---------------
+o <- subset(intSites, experimentType == 'SingleChain' & nearestFeature != 'F8')
+write(unique(o$LTRseq2sRep[order(nchar(o$LTRseq2sRep))]), file = '~/ITRs')
 
 
 
@@ -122,8 +146,8 @@ createColorPalette <- function(n) grDevices::colorRampPalette(RColorBrewer::brew
 #--------------------------------------------------------------------------------------------------
 
 ITRplot.shiftVal <- 32
-ITRplot.ITRline  <- data.frame(x1 = 0 , x2 = 95, y = 100)
-ITRplot.ITRticks <- data.frame(x = c(0, 26.5, 37.5, 48.5, 59.5, 69.5, 95), y1 = 98, y2 = 102)
+ITRplot.ITRline  <- data.frame(x1 = 0 , x2 = 98, y = 100)
+ITRplot.ITRticks <- data.frame(x = c(0, 26.5, 37.5, 48.5, 59.5, 69.5, 98), y1 = 98, y2 = 102)
 ITRplot.ITRtips  <- data.frame(x = c(37.5, 59.5), y1 = 0, y2 = 100)
 ITRplot.ITRlabels <- c("A", "C'/B", "C/B'","B/C'", "B'/C", "A'")
 ITRplot.ITRlabelsPos    <- c(14, 32, 44, 55, 65, 83)
@@ -163,10 +187,17 @@ ggsave(report$ITR.direction.plot, file = 'tables_and_figures/ITR.direction.plot.
 
 
 ann_text <- data.frame(label      = c("A", "B", "B'", "C'", "C", "A'",    "A", "C'", "C", "B", "B'", "A'",  "A"),
-                       LTRseqName = factor(c("3'", "3'", "3'", "3'", "3'", "3'",  "5'","5'","5'","5'","5'","5'", "Unknown"), levels = c("3'","5'","Unknown")),
+                       LTRseqName = factor(c("3' direction", "3' direction", "3' direction", "3' direction", "3' direction", "3' direction",  
+                                             "5' direction", "5' direction", "5' direction", "5' direction", "5' direction", "5' direction", "Undetermined"), levels = c("3' direction","5' direction","Undetermined")),
                        x = c(14, 32, 44, 53, 63, 81, 14, 32, 44, 53, 63, 81, 14), y = 105)
 
-report$ITR.abundanceDirection.plot <-
+ITRplot.ITRline$y <- 53
+ITRplot.ITRticks$y1 <- 51
+ITRplot.ITRticks$y2 <- 55
+ITRplot.ITRtips$y2 <- 51
+ann_text$y <- 58
+
+report$ITR.abundanceDirection.plot <- 
   mutate(expIntSites.noF8, ITRnts = nchar(LTRseqsRep) - ITRplot.shiftVal) %>%
   mutate(abundBin = cut(estAbund, breaks = c(0, 5, 10, 50, max(expIntSites.noF8$estAbund)))) %>%
   select(subject, abundBin, LTRseqName, estAbund, ITRnts) %>%
@@ -174,8 +205,8 @@ report$ITR.abundanceDirection.plot <-
   summarise(nSites = n()) %>%
   ungroup() %>%
   mutate(abundBin = recode(abundBin, '(0,5]' = '1 - 5', '(5,10]' = '6 - 10', '(10,50]' = '11 - 50', '(50,131]' = ' 51 - 131')) %>%
-  mutate(LTRseqName = recode(LTRseqName, u = "Unknown", "5p" = "5'", "3p" = "3'")) %>%
-  mutate(LTRseqName = factor(as.character(LTRseqName), levels = c('Unknown', "5'", "3'"))) %>%
+  mutate(LTRseqName = recode(LTRseqName, u = "Undetermined", "5p" = "5' direction", "3p" = "3' direction")) %>%
+  mutate(LTRseqName = factor(as.character(LTRseqName), levels = c('Undetermined', "5' direction", "3' direction"))) %>%
   ggplot(aes(ITRnts, nSites, fill = abundBin)) +
   theme_bw() +
   geom_col(color = 'black', size = 0.25) +
@@ -186,6 +217,7 @@ report$ITR.abundanceDirection.plot <-
   geom_segment(data = ITRplot.ITRtips, aes(x = x, xend = x, y = y1, yend = y2), inherit.aes = FALSE, linetype = 'dotted') +
   geom_text(data = ann_text, aes(label = label, x = x, y = y), hjust = 0, inherit.aes = FALSE) +
   labs(x = 'ITR position', y = 'Number of Integrations') +
+  ylim(c(0, 60)) +
   theme(axis.text=element_text(size=12), axis.title=element_text(size=14), legend.text=element_text(size=14), legend.title =element_text(size=14),
         strip.text.y = element_text(size = 12, angle = 0),
         strip.background = element_blank(),
@@ -651,36 +683,20 @@ single_vectorExon_plots <- arrangeGrob(grobs = createVectorExonPlots('AAVengeR/o
 ggsave(single_vectorExon_plots, file = 'tables_and_figures/singleVector_genomicExonHits.pdf', height = 8, width = 11, units = 'in')
   
 
-z <- createVectorExonPlots('AAVengeR/outputs/vectors_single/sites.RData', 11:17)
 
-
-grid.draw(arrangeGrob(grobs = z, 
-            layout_matrix = rbind(c(1,1,1,1,1,1,1),c(1,1,1,1,1,1,1), c(1,1,1,1,1,1,1), 
-                                  c(NA,2,2,2,2,2,NA), c(NA,3,3,3,3,3,NA), c(NA,4,4,4,4,4,NA))))
-
-
-ggsave(z, file = 'tables_and_figures/singleVector_genomicExonHits.pdf', height = 8, width = 11, units = 'in')
-
-
-
-
-
-
-
-
-
-# All exons are expected to be covered in the split chain experiments since the entire subject
-# light + heavy chain is data is being used.
+set.seed(42)
 light_vectorExon_plots <- arrangeGrob(grobs = createVectorExonPlots('AAVengeR/outputs/vectors_light/sites.RData', 11:17), 
                                        layout_matrix = rbind(c(1,1,1,1,1,1,1),c(1,1,1,1,1,1,1), c(1,1,1,1,1,1,1),
                                                              c(NA,2,2,2,2,2,NA), c(NA,3,3,3,3,3,NA), c(NA,4,4,4,4,4,NA)))
+ggsave(light_vectorExon_plots, file = 'tables_and_figures/lightVector_genomicExonHits.pdf', height = 6.7, width = 11.25, units = 'in')
+ggsave(light_vectorExon_plots, file = 'tables_and_figures/lightVector_genomicExonHits.svg',  height = 6.7, width = 11.25, units = 'in')
 
-
+set.seed(42)
 heavy_vectorExon_plots <- arrangeGrob(grobs = createVectorExonPlots('AAVengeR/outputs/vectors_heavy/sites.RData', 11:17), 
                                       layout_matrix = rbind(c(1,1,1,1,1,1,1),c(1,1,1,1,1,1,1), c(1,1,1,1,1,1,1),
                                                             c(NA,2,2,2,2,2,NA), c(NA,3,3,3,3,3,NA), c(NA,4,4,4,4,4,NA)))
-
-
+ggsave(heavy_vectorExon_plots, file = 'tables_and_figures/heavyVector_genomicExonHits.pdf',  height = 6.7, width = 11.25, units = 'in')
+ggsave(heavy_vectorExon_plots, file = 'tables_and_figures/heavyVector_genomicExonHits.svg',  height = 6.7, width = 11.25, units = 'in')
 
 
 
@@ -688,21 +704,25 @@ chromosomeLengths <- sapply(rev(paste0("chr", c(seq(1:38), "X"))),
                             function(x){length(BSgenome.Cfamiliaris.UCSC.canFam3[[x]])},
                             simplify = FALSE, USE.NAMES = TRUE)
 
-intSiteDistributionPlot <- function (d, chromosomeLengths, alpha = 0.6, siteColor = "black") 
+intSiteDistributionPlot <- function (d, chromosomeLengths, alpha = 1) 
 {
   library(GenomicRanges)
   library(ggplot2)
   library(gtools)
   library(dplyr)
-  d <- d[, c("start", "seqnames")]
+  d <- d[, c("start", "seqnames", "subject")]
   d <- suppressWarnings(bind_rows(d, bind_rows(lapply(names(chromosomeLengths)[!names(chromosomeLengths) %in% 
                                                                                  unique(as.character(d$seqnames))], function(x) {
                                                                                    data.frame(start = 1, seqnames = x)
                                                                                  }))))
   d$seqnames <- factor(d$seqnames, levels = mixedsort(names(chromosomeLengths)))
+  
   d <- lapply(split(d, d$seqnames), function(x) {
-    lines <- data.frame(x = rep(x$start, each = 2), y = rep(c(0, 
-                                                              1), nrow(x)), g = rep(1:nrow(x), each = 2), seqnames = x$seqnames[1])
+    lines <- data.frame(x = rep(x$start, each = 2), 
+                        y = rep(c(0, 1), nrow(x)), 
+                        g = rep(1:nrow(x), each = 2), 
+                        s = x$subject,
+                        seqnames = x$seqnames[1])
     box <- data.frame(boxYmin = 0, boxYmax = 1, boxXmin = 1, 
                       boxXmax = chromosomeLengths[[as.character(x$seqnames[1])]], 
                       seqnames = x$seqnames[1])
@@ -710,19 +730,39 @@ intSiteDistributionPlot <- function (d, chromosomeLengths, alpha = 0.6, siteColo
   })
   sites <- do.call(rbind, lapply(d, "[[", 1))
   boxes <- do.call(rbind, lapply(d, "[[", 2))
-  ggplot() + theme_bw() + geom_line(data = sites, alpha = alpha, 
-                                    color = siteColor, aes(x, y, group = g)) + geom_rect(data = boxes, 
-                                                                                         color = "black", alpha = 0, mapping = aes(xmin = boxXmin, 
-                                                                                                                                   xmax = boxXmax, ymin = boxYmin, ymax = boxYmax)) + 
-    facet_grid(seqnames ~ ., switch = "y") + scale_x_continuous(expand = c(0, 
-                                                                           0)) + labs(x = "Genomic position", y = "") + theme(axis.text.y = element_blank(), 
-                                                                                                                              axis.ticks.y = element_blank(), panel.grid.major = element_blank(), 
-                                                                                                                              panel.grid.minor = element_blank(), panel.background = element_blank(), 
-                                                                                                                              panel.border = element_blank(), strip.text.y = element_text(size = 12, 
-                                                                                                                                                                                          angle = 180), strip.background = element_blank())
+  
+  
+  ggplot() + 
+  theme_bw() + 
+  scale_color_manual(name = 'Dog', values = colorRampPalette(brewer.pal(12, "Paired"))(6)) +
+  geom_line(data = sites, 
+            alpha = alpha, 
+            size = 0.25,
+            aes(x, y, group = g, color = s)) +
+    geom_rect(data = boxes, 
+              color = "black", 
+              size = 0.25,
+              alpha = 0,
+              mapping = aes(xmin = boxXmin, 
+                            xmax = boxXmax, 
+                            ymin = boxYmin, 
+                            ymax = boxYmax)) + 
+    facet_grid(seqnames ~ ., switch = "y") + 
+    #scale_x_continuous(expand = c(0, 0)) + 
+    labs(x = "Genomic position", y = "") + 
+    theme(axis.text.y = element_blank(), 
+          axis.ticks.y = element_blank(), 
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(), panel.background = element_blank(),
+          panel.border = element_blank(), 
+          strip.text.y = element_text(size = 12, angle = 180), 
+          strip.background = element_blank(),
+          axis.title.x=element_blank(),
+          axis.text.x=element_blank(),
+          axis.ticks.x=element_blank())
 }
 
-report$genomeMap <- intSiteDistributionPlot(intSites, chromosomeLengths)
+report$genomeMap <- intSiteDistributionPlot(filter(intSites, ! subject %in% c('HO2', 'M12')), chromosomeLengths, alpha = 1)
 ggsave(report$genomeMap, file = 'tables_and_figures/chromosome_map.pdf', height = 10, width = 8, units = 'in')
 
 
@@ -750,46 +790,34 @@ representativeSeq <- function(s){
   s[which(d == min(d))[1]]
 }
 
-
+# Determine the sequences and numbers of additional NTs.
 intSites <- rowwise(intSites) %>%
             mutate(LTRseqAdditionNTs = substr(LTRseq2sRep, nchar(LTRseqsRep) + 1, nchar(LTRseq2sRep)),
                    nLTRseqAdditionNTs = nchar(LTRseqAdditionNTs)) %>%
             ungroup()
 
 
-# # ----
-# 200
-# 
-# R2 <- ShortRead::readFastq('data/sequencingData/Undetermined_S0_L001_R2_001.fastq.gz')
-# R2.ids <- sub('\\s+.+$', '', as.character(R2@id))
-# z <- R2[grep("M03249:365:000000000-C3CH4:1:2108:13566:12043", R2.ids)]
-# 
-# 
-# o <- subset(intSites, nLTRseqAdditionNTs >= 100)
-# # chr11-74119396
-
-#-----
-
-intSites$s <- paste(intSites$posid2, intSites$subject, intSites$LTRseq2sRep)
+# Find unique sites allowing for the same site to be seen betwen subjects.
+intSites$s <- paste(intSites$posid, intSites$subject, intSites$LTRseq2sRep)
 d <- intSites[! duplicated(intSites$s),]
 
+# Create an within / outside F8 flag.
 d1 <- data.frame(table(subset(d, nearestFeature == 'F8')$nLTRseqAdditionNTs))
-d1$g <- 'True'
+d1$g <- 'Within Factor VIII'
 d2 <- data.frame(table(subset(d, nearestFeature != 'F8')$nLTRseqAdditionNTs))
-d2$g <- 'False'
+d2$g <- 'Outside Factor VIII'
 
 tab <- bind_rows(d1, d2)
 tab$Var1 <- as.integer(as.character(tab$Var1))
-e1 <- sum(subset(tab, Var1 >= 25 & g == 'True')$Freq)
-e2 <- sum(subset(tab, Var1 >= 25 & g == 'False')$Freq)
+
+# Count the number of integrations with >= 25 additional NTs.
+e1 <- sum(subset(tab, Var1 >= 25 & g == 'Within Factor VIII')$Freq)
+e2 <- sum(subset(tab, Var1 >= 25 & g == 'Outside Factor VIII')$Freq)
+
 tab <- subset(tab, Var1 < 25) 
 tab$Var1 <- as.character(tab$Var1)
-tab <- bind_rows(tab, tibble(Var1 = '25+', Freq = e1, g = 'True'), tibble(Var1 = '25+', Freq = e2, g = 'False'))
-tab$Var1 <- factor(tab$Var1, levels = unique(tab$Var1))
-tab$g <- factor(tab$g, levels = c('True', 'False'))
-
-tab$g <- as.character(tab$g)
-tab$g <- ifelse(tab$g == 'True', 'Within Factor VIII', 'Outside Factor VIII')
+tab <- bind_rows(tab, tibble(Var1 = '25+', Freq = e1, g = 'Within Factor VIII'), tibble(Var1 = '25+', Freq = e2, g = 'Outside Factor VIII'))
+tab$Var1 <- factor(tab$Var1, levels = c(as.character(0:24), '25+'))
 tab$g <- factor(tab$g, levels = c('Within Factor VIII', 'Outside Factor VIII'))
 
 report$additionaNTplot <- 
@@ -800,11 +828,43 @@ report$additionaNTplot <-
   scale_y_continuous(breaks = seq(0, max(tab$Freq), by = 250), label = scales::comma) +
   labs(x = 'Number of additional NTs', y = 'Integrations') +
   theme(panel.grid.minor.y = element_blank(),
-        axis.text = element_text(size = 12), axis.title = element_text(size = 14),
-        panel.grid.major.x = element_blank(),
-        panel.grid.minor.x = element_blank())
+        axis.text = element_text(size = 14), axis.title = element_text(size = 14), legend.text=element_text(size=14),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
 
 ggsave(report$additionaNTplot, file = 'tables_and_figures/additionalNTdistributions.pdf', height = 5, width = 10, units = 'in')
+
+
+# Second version with different binning.
+tab <- bind_rows(d1, d2)
+tab$Var1 <- as.integer(as.character(tab$Var1))
+
+# Count the number of integrations with >= 15 additional NTs.
+e1 <- sum(subset(tab, Var1 >= 15 & g == 'Within Factor VIII')$Freq)
+e2 <- sum(subset(tab, Var1 >= 15 & g == 'Outside Factor VIII')$Freq)
+
+tab <- subset(tab, Var1 < 15) 
+tab$Var1 <- as.character(tab$Var1)
+tab <- bind_rows(tab, tibble(Var1 = '15+', Freq = e1, g = 'Within Factor VIII'), tibble(Var1 = '15+', Freq = e2, g = 'Outside Factor VIII'))
+tab$Var1 <- factor(tab$Var1, levels = c(as.character(0:14), '15+'))
+tab$g <- factor(tab$g, levels = c('Within Factor VIII', 'Outside Factor VIII'))
+
+report$additionaNTplot2 <- 
+  ggplot(tab, aes(Var1, Freq, fill = g)) +
+  theme_bw() +
+  scale_fill_manual(name = '', values = c('gray25', 'gray75')) +
+  geom_col(position='dodge') +
+  scale_y_continuous(breaks = seq(0, max(tab$Freq), by = 250), label = scales::comma) +
+  labs(x = 'Number of additional NTs', y = 'Integrations') +
+  theme(panel.grid.minor.y = element_blank(),
+        axis.text = element_text(size = 14), axis.title = element_text(size = 14), legend.text=element_text(size=14),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+ggsave(report$additionaNTplot2, file = 'tables_and_figures/additionalNTdistributions2.pdf', height = 5, width = 10, units = 'in')
+
+
+
 
 
 
