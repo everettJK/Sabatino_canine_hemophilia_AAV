@@ -1,0 +1,17 @@
+start,end,label,sseqid,correction
+1,183,5' ITR,SingleChainVector,0
+184,189,5' ITR spacer,SingleChainVector,0
+190,715,Promoter,SingleChainVector,0
+724,5111,F8,SingleChainVector,0
+5112,5245,Poly-A,SingleChainVector,0
+5252,5432,3' ITR,SingleChainVector,0
+2681,2853,5' ITR,LightChainVector,2681
+3094,3571,Promoter,LightChainVector,2681
+4091,6163,F8,LightChainVector,2681
+6178,6415,Poly-A,LightChainVector,2681
+6436,6609,3' ITR,LightChainVector,2681
+2681,2853,5' ITR,HeavyChainVector,2681
+3094,3571,Promoter,HeavyChainVector,2681
+3782,6055,F8,HeavyChainVector,2681
+6316,6553,Poly-A,HeavyChainVector,2681
+6573,6746,3' ITR,HeavyChainVector,2681

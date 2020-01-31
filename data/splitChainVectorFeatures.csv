@@ -1,0 +1,19 @@
+start,end,label,sseqid,correction
+2681,2853,5' ITR,HeavyChainVector,2681
+2854,3093,post 5' ITR spacer,HeavyChainVector,2681
+3094,3571,Promoter,HeavyChainVector,2681
+3572,3781,post promoter spacer,HeavyChainVector,2681
+3782,6055,F8 heavy chain,HeavyChainVector,2681
+6056,6315,post heavy chain spacer,HeavyChainVector,2681
+6316,6553,PolyA,HeavyChainVector,2681
+6554,6573,post heavy polyA spacer,HeavyChainVector,2681
+6574,6747,3' ITR,HeavyChainVector,2681
+2681,2853,5' ITR,LightChainVector,2681
+2854,3093,post 5' ITR spacer,LightChainVector,2681
+3094,3571,Promoter,LightChainVector,2681
+3572,4090,post promoter spacer,LightChainVector,2681
+4091,6163,F8 light chain,LightChainVector,2681
+6164,6177,post light chain spacer,LightChainVector,2681
+6178,6415,PolyA,LightChainVector,2681
+6416,6435,post light polyA spacer,LightChainVector,2681
+6436,6609,3' ITR,LightChainVector,2681

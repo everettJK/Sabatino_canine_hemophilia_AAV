@@ -1,0 +1,11 @@
+R1.path: /data/sequencing/Illumina-archive/191122_M03249_0033_000000000-CRMP5/Data/Intensities/BaseCalls/Dog-7_S7_L001_R1_001.fastq.gz
+R2.path: /data/sequencing/Illumina-archive/191122_M03249_0033_000000000-CRMP5/Data/Intensities/BaseCalls/Dog-7_S7_L001_R2_001.fastq.gz
+CPUs: 25
+siteChromosome: chr18
+sitePosition:  48600092
+blat.path:  /home/everett/software/blat/blat
+bwa.path:   /home/everett/software/bwa/bwa
+vectorDB.blat.path: /home/everett/releases/Canine_hemophilia_AAV/plasmids/VectorSeqs_ITR_to_ITR.2bit
+vectorDB.bwa.path:  /home/everett/releases/Canine_hemophilia_AAV/plasmids/VectorSeqs_ITR_to_ITR
+genomeDB.blat.path: /home/everett/data/sequenceDatabases/BLAT/canFam3/canFam3.2bit
+genomeDB.bwa.path:  /home/everett/data/sequenceDatabases/BWA/canFam3/canFam3

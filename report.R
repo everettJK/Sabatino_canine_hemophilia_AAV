@@ -125,11 +125,63 @@ o <- group_by(expIntSites.noF8, experimentType, subject, sample) %>%
 wilcox.test(subset(o, experimentType == 'SingleChain')$nSitesMassNormalized, subset(o, experimentType == 'SplitChain')$nSitesMassNormalized)$p.value
 
 
+
+
 vectorSitesSingle <- new.env()
+vectorSitesLight  <- new.env()
+vectorSitesHeavy <- new.env()
+
 load('AAVengeR/outputs/vectors_single/sites.RData', envir = vectorSitesSingle)
-inDogSingle <- subset(expIntSites.noF8, experimentType == 'SingleChain')
-percentInVector <- n_distinct(vectorSitesSingle$sites$posid) / (n_distinct(vectorSitesSingle$sites$posid) + n_distinct(inDogSingle$posid))
-percentInDog <-  n_distinct(inDogSingle$posid)/ (n_distinct(vectorSitesSingle$sites$posid) + n_distinct(inDogSingle$posid))
+load('AAVengeR/outputs/vectors_light/sites.RData',  envir = vectorSitesLight)
+load('AAVengeR/outputs/vectors_heavy/sites.RData',  envir = vectorSitesHeavy)
+
+
+siteCounts <- bind_rows(lapply(split(expIntSites.noF8, expIntSites.noF8$sample), function(x){
+  vectorSites <- tibble()
+  expType <- as.character(unique(x$experimentType))
+  
+  if(expType == 'SingleChain'){
+   vectorSites <- n_distinct(subset(vectorSitesSingle$sites, sample == x$sample[1])$posid)
+  } else if(expType == 'SplitChain'){
+    lightTransgeneSites <- subset(vectorSitesLight$sites, sample == x$sample[1] & start >= 1122 & start <= (1122 + 2385))
+    lightBackboneSites  <- subset(vectorSitesLight$sites, sample == x$sample[1] & ! posid %in% lightTransgeneSites$posid)
+    heavyTransgeneSites <- subset(vectorSitesHeavy$sites, sample == x$sample[1] & start >= 1106 & start <= (1106 + 2546))
+    heavyBackboneSites  <- subset(vectorSitesHeavy$sites, sample == x$sample[1] & ! posid %in% heavyTransgeneSites$posid)
+    
+    # ggplot(bind_rows(tibble(pos = heavyTransgeneSites$start, source = 'transgene'), 
+    #                  tibble(pos = heavyBackboneSites$start, source = 'backbone')), aes(pos, 1, color = source)) + geom_point()
+    
+    vectorSites <- floor(mean(c(n_distinct(lightBackboneSites$posid), n_distinct(heavyBackboneSites$posid)))) + 
+                   n_distinct(lightTransgeneSites$posid) + n_distinct(heavyTransgeneSites$posid)
+    
+  } else {
+    stop('Experiment selection error.')
+  }
+  
+  tibble(dog = x$subject[1], sample = x$sample[1], expType = expType, VCN = x$VCN[1], sampleMass = x$sampleMass[1],
+         nSites = n_distinct(x$posid), nVectorSites = vectorSites, nSitesMassCorrected = n_distinct(x$posid)/x$sampleMass[1], 
+         nSitesVCNCorrected = n_distinct(x$posid)/x$VCN[1], percentSitesInVector =  nVectorSites / (n_distinct(x$posid) + nVectorSites)*100)
+}))
+
+
+arrange(siteCounts, expType)
+
+# Difference between number of sites recovered from single chain vs split chain (sample level p-val)
+wilcox.test(subset(siteCounts, expType == 'SingleChain')$nSites, subset(siteCounts, expType == 'SplitChain')$nSites)$p.val
+
+# Difference between number of sites recovered from single chain vs split chain (sample level, mass-corrected p-val)
+wilcox.test(subset(siteCounts, expType == 'SingleChain')$nSitesMassCorrected, subset(siteCounts, expType == 'SplitChain')$nSitesMassCorrected)$p.val
+
+# Difference between number of sites recovered from single chain vs split chain (sample level, VCN-corrected p-val)
+wilcox.test(subset(siteCounts, expType == 'SingleChain')$nSitesVCNCorrected, subset(siteCounts, expType == 'SplitChain')$nSitesVCNCorrected)$p.val
+
+# Difference between percent sites in vector from single chain vs split chain (sample level p-val)
+wilcox.test(subset(siteCounts, expType == 'SingleChain')$percentSitesInVector, subset(siteCounts, expType == 'SplitChain')$percentSitesInVector)$p.val
+
+
+
+
+
 
 createColorPalette <- function(n) grDevices::colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))(n)
 

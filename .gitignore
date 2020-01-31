@@ -74,8 +74,8 @@ AAVengeR/outputs/vectors_heavy/seqChunks/virusReads.36
 AAVengeR/outputs/vectors_heavy/seqChunks/virusReads.37
 AAVengeR/outputs/canFam3/alignments.RData
 data/sequencingData/Undetermined_S0_L001_I1_001.fastq.gz
-data/sequencingData/Undetermined_S0_L001_R1_001.fastq.gz
 data/sequencingData/Undetermined_S0_L001_R2_001.fastq.gz
+data/sequencingData/Undetermined_S0_L001_R1_001.fastq
 data/sequenceData/canFam3.2bit
 data/sequenceData/canFam3.bwt
 data/sequenceData/canFam3.pac

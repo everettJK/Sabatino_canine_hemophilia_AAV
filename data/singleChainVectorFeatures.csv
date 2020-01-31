@@ -1,0 +1,10 @@
+start,end,label,sseqid,correction
+1,183,5' ITR,SingleChainVector,0
+184,189,post 5' ITR spacer,SingleChainVector,0
+190,715,Promoter,SingleChainVector,0
+716,723,post promoter spacer,SingleChainVector,0
+724,2998,Single heavy F8,SingleChainVector,0
+2999,5111,Single light F8,SingleChainVector,0
+5112,5245,Poly-A,SingleChainVector,0
+5246,5251,post Poly-A signal spacer,SingleChainVector,0
+5252,5432,3' ITR,SingleChainVector,0
