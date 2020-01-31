@@ -40,28 +40,39 @@ slice8a -- single chain, 5' ITR + 60% promoter
 
 
 
-Cetner of F8 -> genome validation
+Center of F8 -> genome validation
 ---------------------------------------------------------------------------------------------------
 
 M50 chr4+14801159
-dog1 -- 90% of F8 in single contig; entire vector if we join three contigs. First 1/3 of F8 has weak read coverage. 
-dog2 -- weaker result, possible bleed over. Coverage for second half of F8 and 3' ITR
+No bridging reads.
+dog1 -- Single light chain out to polyA + 3' ITR then some additional F8.
+dog2 -- Single light chain out to polyA + 3' ITR.
+
 
 M50 chr4-14757678
-dog3 -- all or most of light chain half of the single vector + poly-A + ITR. ! No bridging reads.
-dog4 -- all or most of heavy chain half of the single vector + poly-A + ITR. ! No bridging reads. Weak result / bleed over.
-dog5 -- all or most of light chain half of the single vector + poly-A + ITR. ! No bridging reads.
-dog6 -- all or most of heavy chain half of the single vector + poly-A + ITR. ! No bridging reads. Weak result / bleed over.
+No bridging reads.
+dog3 -- Single light chain out to polyA + 3' ITR.
+dog4 -- Single 5' ITR + promoter + heavvy chain
+dog5 -- Single light chain out to polyA + 3' ITR.
+dog6 -- No contigs assemble
 
 
 J60 chr18-48600092
-dog7  -- 3' 1/2 heavy chain + poly-A + ITR; strong 5' bridging read pileup 
-dog8  -- 5' 1/2 heavy chain + promotor + ITR; strong 5' (?) bridging read pileup (full heavy chain contig?)
-dog9  -- 5' 1/2 heavy chain + promotor + ITR; strong 3' bridging read pileup
-dog10 -- lots light chain signal? 5 reads in 3' bridging pileup
-dog11 -- 3' 1/2 of light chain. small number bridge reads in both directions. 
+Some slices contain bridging reads
+dog7  -- light chain + polyA (additional mixed contigs created)
+dog8  -- full length heavy chain ? (ITR -> ITR)
+dog9  -- zoo of contigs
+dog10 -- larger zoo of contigs
+dog11 -- larger zoo of contigs
 
 
+Linus chr18-48556862
+dog12 
+dog13
+dog14
+dog15
+dog16
+dog17
 
 
 #----------------
