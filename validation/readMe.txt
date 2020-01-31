@@ -74,37 +74,19 @@ dog15
 dog16
 dog17
 
+Linus chr4-14681249
+dog18
+dog19
+dog20
+dog21
+dog22
+dog23
 
-#----------------
-M50	Dog 1	chr4+14801159
-M50	Dog 2	chr4+14801159
-M50	Dog 3	chr4-14757678
-M50	Dog 4	chr4-14757678
-M50	Dog 5	chr4-14757678
-M50	Dog 6	chr4-14757678
-J60	Dog 7	chr18-48600092
-J60	Dog 8	chr18-48600092
-J60	Dog 9	chr18-48600092
-J60	Dog 10	chr18-48600092
-J60	Dog 11	chr18-48600092
-Linus	Dog 12	chr18-48556862
-Linus	Dog 13	chr18-48556862
-Linus	Dog 14	chr18-48556862
-Linus	Dog 15	chr18-48556862
-Linus	Dog 16	chr18-48556862
-Linus	Dog 17	chr18-48556862
-Linus	Dog 18	chr4-14681249
-Linus	Dog 19	chr4-14681249
-Linus	Dog 20	chr4-14681249
-Linus	Dog 21	chr4-14681249
-Linus	Dog 22	chr4-14681249
-Linus	Dog 23	chr4-14681249
-J60	Dog 24	chr18-48578085
-J60	Dog 25	chr18-48578085
-J60	Dog 26	chr18-48578085
-J60	Dog 27	chr18-48578085
-J60	Dog 28	chr18-48578085
-J60	Dog 29	chr18-48578085
-
-
+J60 chr18-48578085
+dog24
+dog25
+dog26
+dog27
+dog28
+dog29
 
