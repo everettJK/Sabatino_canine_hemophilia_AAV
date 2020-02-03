@@ -112,6 +112,18 @@ expIntSites.noF8.percentNearOnco    <- n_distinct(expIntSites.noF8.nearOncogene$
 expSitesInTU.inOnco  <- n_distinct(expIntSites.noF8.inTU.inOncogene$posid) / n_distinct(expIntSites.noF8.inTU$posid)
 
 
+# Tables
+sampleTable <- group_by(intSites, sampleName) %>%
+  summarise(dog = subject[1], sampleID = sample[1], nSites = n_distinct(posid), 
+            timePoint = timePoint[1], liverLobe = stringr::str_extract(sampleName[1], '\\d+$'), VCN = VCN[1], inputMass = sampleMass[1]) %>%
+  ungroup() %>%
+  arrange(desc(dog)) %>%
+  dplyr::select(-sampleName) 
+
+openxlsx::write.xlsx(sampleTable, file = 'tables_and_figures/sampleTable.xlsx')
+
+
+
 # Manuscript stats
 
 o <- group_by(expIntSites.noF8, experimentType, subject) %>%
