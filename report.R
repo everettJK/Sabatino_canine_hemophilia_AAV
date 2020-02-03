@@ -1,11 +1,12 @@
 library(gt23)
 library(parallel)
 library(BSgenome.Cfamiliaris.UCSC.canFam3)
+openxlsx::write.xlsx(sampleTable, file = 'tables_and_figures/sampleTable.xlsx')
 library(tidyverse)
 library(scales)
 library(RColorBrewer)
-library(xlsx)
 Rscript_path <- '/home/opt/R-3.4.0/bin/Rscript'
+createColorPalette <- function(n) grDevices::colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))(n)
 
 # Create experimental data save file from the AAVengerR output file.
 if(! file.exists('data/data.RData')){
@@ -141,7 +142,7 @@ wilcox.test(subset(o, experimentType == 'SingleChain')$nSitesMassNormalized, sub
 
 vectorSitesSingle <- new.env()
 vectorSitesLight  <- new.env()
-vectorSitesHeavy <- new.env()
+vectorSitesHeavy  <- new.env()
 
 load('AAVengeR/outputs/vectors_single/sites.RData', envir = vectorSitesSingle)
 load('AAVengeR/outputs/vectors_light/sites.RData',  envir = vectorSitesLight)
@@ -171,12 +172,12 @@ siteCounts <- bind_rows(lapply(split(expIntSites.noF8, expIntSites.noF8$sample),
   }
   
   tibble(dog = x$subject[1], sample = x$sample[1], expType = expType, VCN = x$VCN[1], sampleMass = x$sampleMass[1],
-         nSites = n_distinct(x$posid), nVectorSites = vectorSites, nSitesMassCorrected = n_distinct(x$posid)/x$sampleMass[1], 
-         nSitesVCNCorrected = n_distinct(x$posid)/x$VCN[1], percentSitesInVector =  nVectorSites / (n_distinct(x$posid) + nVectorSites)*100)
+         nSites = n_distinct(x$posid), nVectorSites = vectorSites, percentSitesInVector =  nVectorSites / (n_distinct(x$posid) + nVectorSites)*100)
 }))
 
+siteTable <- arrange(siteCounts, expType)
+openxlsx::write.xlsx(siteTable, file = 'tables_and_figures/siteCountTable.xlsx')
 
-arrange(siteCounts, expType)
 
 # Difference between number of sites recovered from single chain vs split chain (sample level p-val)
 wilcox.test(subset(siteCounts, expType == 'SingleChain')$nSites, subset(siteCounts, expType == 'SplitChain')$nSites)$p.val
@@ -195,14 +196,12 @@ wilcox.test(subset(siteCounts, expType == 'SingleChain')$percentSitesInVector, s
 
 
 
-createColorPalette <- function(n) grDevices::colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))(n)
 
 
 
 
-#---------------
-o <- subset(intSites, experimentType == 'SingleChain' & nearestFeature != 'F8')
-write(unique(o$LTRseq2sRep[order(nchar(o$LTRseq2sRep))]), file = '~/ITRs')
+
+
 
 
 
@@ -355,7 +354,7 @@ report$sitesTable <- mutate(expIntSites.abund.gte2.noF8, ITR_reminant = nchar(LT
                     arrange(desc(estAbund))
 names(report$sitesTable) <- c('Dog',  'Timepoint', 'Position', 'Abundance', 'ITR Remnant length', 'Nearest Gene', 'Distance', 'Nearest oncogene', 'Distance', 'Validated')
 
-write.xlsx(report$sitesTable, file = 'tables_and_figures/sites.xlsx', col.names = TRUE, row.names = FALSE)
+openxlsx::write.xlsx(report$sitesTable, file = 'tables_and_figures/sites.xlsx')
 
 
 # Random site tests
