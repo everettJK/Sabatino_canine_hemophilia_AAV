@@ -171,7 +171,8 @@ siteCounts <- bind_rows(lapply(split(expIntSites.noF8, expIntSites.noF8$sample),
     stop('Experiment selection error.')
   }
   
-  tibble(dog = x$subject[1], sample = x$sample[1], expType = expType, VCN = x$VCN[1], sampleMass = x$sampleMass[1],
+  tibble(dog = x$subject[1], sample = x$sample[1], liverLobe = stringr::str_extract(x$sampleName[1], '\\d+$'), 
+         timePoint = x$timePoint[1],expType = expType, VCN = x$VCN[1], sampleMass = x$sampleMass[1],
          nSites = n_distinct(x$posid), nVectorSites = vectorSites, percentSitesInVector =  nVectorSites / (n_distinct(x$posid) + nVectorSites)*100)
 }))
 
