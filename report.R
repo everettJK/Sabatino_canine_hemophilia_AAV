@@ -1,7 +1,6 @@
 library(gt23)
 library(parallel)
 library(BSgenome.Cfamiliaris.UCSC.canFam3)
-openxlsx::write.xlsx(sampleTable, file = 'tables_and_figures/sampleTable.xlsx')
 library(tidyverse)
 library(scales)
 library(RColorBrewer)
@@ -41,15 +40,18 @@ i <- c(which(intSites$posid == 'chr25-34548677' & intSites$sample == 'GTSP2178')
 intSites <- intSites[-i,]
 
 
+
 # Create UCSC browser session file and cp it to the Bushman lab web server.
 # http://genome.ucsc.edu/cgi-bin/hgTracks?db=canFam3&hgt.customText=http://microb120.med.upenn.edu/UCSC/sabatino/AAVengeR.ucsc
 system(paste0('scp AAVengeR/outputs/canFam3_final/AAVengeR.ucsc  microb120:/usr/share/nginx/html/UCSC/sabatino/'))
+
 
 
 # Read in information about the sites that were tested in the laboratory.
 d <- read.csv('data/siteValidations.csv', header = TRUE)
 intSites$validation <- NA
 intSites[apply(d, 1, function(x){ which(intSites$sample == x[1] & intSites$posid == x[2]) }),]$validation <- as.character(d$highestMethods)
+
 
 
 # Dual-dections. Use the output below to create a dual detection data file to merge together duel detections.
@@ -69,7 +71,7 @@ intSites[apply(d, 1, function(x){ which(intSites$sample == x[1] & intSites$posid
 # dualDetection[sapply(dualDetection, is.null)] <- NULL
 
 
-# Read in the duel detection table created with the code block above 
+# Read in the duel detection table created with the commented code block above 
 # and merge sites into the mean position.
 dualDetection <- read.csv('data/duelDetections.csv', header = TRUE)
 for(x in 1:nrow(dualDetection)){
@@ -97,9 +99,13 @@ for(x in 1:nrow(dualDetection)){
 }
 
 
+# Add sample details to intSite data.
 d <- read.table('data/sampleDetails.tsv', sep = '\t', header = TRUE)
 intSites <- left_join(intSites, d, by = 'sample')
 intSites$posid2 <- paste(intSites$subject, intSites$posid)
+
+
+# Create a series of subsets of the data for analysis.
 expIntSites <- filter(intSites, ! subject %in% c('HO2', 'M12'))
 expIntSites.noF8  <- filter(expIntSites, nearestFeature != 'F8')
 expIntSites.abund.gte2  <- filter(expIntSites, estAbund >= 2)
@@ -113,7 +119,27 @@ expIntSites.noF8.percentNearOnco    <- n_distinct(expIntSites.noF8.nearOncogene$
 expSitesInTU.inOnco  <- n_distinct(expIntSites.noF8.inTU.inOncogene$posid) / n_distinct(expIntSites.noF8.inTU$posid)
 
 
-# Tables
+
+# Gene enrichment from abundant clones.
+library(STRINGdb)
+string_db <- STRINGdb$new(version="10", species=9606, score_threshold=0)
+o <- subset(expIntSites.noF8, abs(nearestFeatureDist) <= 50000 & estAbund >= 2)
+d <- data.frame(gene = unlist(strsplit(o$nearestFeature, ',')))
+# Change gene names to older symbols so that stringDB will recognize them.
+d$gene <- gsub('LTO1', 'ORAOV1', d$gene)
+d$gene <- gsub('CFAP299', 'C4orf22', d$gene)
+d$gene <- gsub('MINDY2', 'FAM63B', d$gene)
+d$gene <- gsub('SUGCT', 'C7orf10', d$gene)
+d$gene <- gsub('UBE2E4P', 'UbcM2', d$gene)
+d$gene <- gsub('ADGRL2', 'LPHH1', d$gene)
+d <- string_db$map(d, "gene", removeUnmappedRows = FALSE)
+e <- string_db$get_enrichment(d$STRING_id, category = 'KEGG', methodMT = "fdr", iea = FALSE)
+subset(e, pvalue_fdr <= 0.05)
+
+
+
+
+# Sample tables for manuscript supp.
 sampleTable <- group_by(intSites, sampleName) %>%
   summarise(dog = subject[1], sampleID = sample[1], nSites = n_distinct(posid), 
             timePoint = timePoint[1], liverLobe = stringr::str_extract(sampleName[1], '\\d+$'), VCN = VCN[1], inputMass = sampleMass[1]) %>%
@@ -126,20 +152,9 @@ openxlsx::write.xlsx(sampleTable, file = 'tables_and_figures/sampleTable.xlsx')
 
 
 # Manuscript stats
+#--------------------------------------------------------------------------------------------------
 
-o <- group_by(expIntSites.noF8, experimentType, subject) %>%
-     summarise(nSites = n_distinct(posid)) %>%
-     ungroup()
-wilcox.test(subset(o, experimentType == 'SingleChain')$nSites, subset(o, experimentType == 'SplitChain')$nSites)$p.value
-
-o <- group_by(expIntSites.noF8, experimentType, subject, sample) %>%
-     summarise(nSitesMassNormalized = n_distinct(posid) / sampleMass[1]) %>%
-     ungroup()
-wilcox.test(subset(o, experimentType == 'SingleChain')$nSitesMassNormalized, subset(o, experimentType == 'SplitChain')$nSitesMassNormalized)$p.value
-
-
-
-
+# Load AAVenger sites from runs where the vector was used as the reference geneome.
 vectorSitesSingle <- new.env()
 vectorSitesLight  <- new.env()
 vectorSitesHeavy  <- new.env()
@@ -148,6 +163,14 @@ load('AAVengeR/outputs/vectors_single/sites.RData', envir = vectorSitesSingle)
 load('AAVengeR/outputs/vectors_light/sites.RData',  envir = vectorSitesLight)
 load('AAVengeR/outputs/vectors_heavy/sites.RData',  envir = vectorSitesHeavy)
 
+
+# Here we loop through each sample and compare the number of sites found outside of F8 to the
+# number of sites found within the vector. We are assuming all sites within F8 are vector sites 
+# based on previous reusults. The split chain vectors needs to be handled differently
+# than then single chain vector because the split chain vectors share 5' ITR, promoter, polyA and 3' ITR sequences.
+# For the split vectors, for each sample, we use the average number of sites from the shared regions. 
+# The number of within vector sites are likely a lower bound estimate because the position standardization 
+# algorithm is likely combining unique sites because some many sites are located close to one another.
 
 siteCounts <- bind_rows(lapply(split(expIntSites.noF8, expIntSites.noF8$sample), function(x){
   vectorSites <- tibble()
@@ -161,6 +184,8 @@ siteCounts <- bind_rows(lapply(split(expIntSites.noF8, expIntSites.noF8$sample),
     heavyTransgeneSites <- subset(vectorSitesHeavy$sites, sample == x$sample[1] & start >= 1106 & start <= (1106 + 2546))
     heavyBackboneSites  <- subset(vectorSitesHeavy$sites, sample == x$sample[1] & ! posid %in% heavyTransgeneSites$posid)
     
+    # Visual check that we are parsing the vector correctly.
+    # browser()
     # ggplot(bind_rows(tibble(pos = heavyTransgeneSites$start, source = 'transgene'), 
     #                  tibble(pos = heavyBackboneSites$start, source = 'backbone')), aes(pos, 1, color = source)) + geom_point()
     
@@ -173,12 +198,17 @@ siteCounts <- bind_rows(lapply(split(expIntSites.noF8, expIntSites.noF8$sample),
   
   tibble(dog = x$subject[1], sample = x$sample[1], liverLobe = stringr::str_extract(x$sampleName[1], '\\d+$'), 
          timePoint = x$timePoint[1],expType = expType, VCN = x$VCN[1], sampleMass = x$sampleMass[1],
-         nSites = n_distinct(x$posid), nVectorSites = vectorSites, percentSitesInVector =  nVectorSites / (n_distinct(x$posid) + nVectorSites)*100)
+         nSites = n_distinct(x$posid), nVectorSites = vectorSites, 
+         nSitesMassCorrected = n_distinct(x$posid)/x$sampleMass[1],
+         nSitesVCNCorrected = n_distinct(x$posid)/x$VCN[1],
+         percentSitesInVector =  nVectorSites / (n_distinct(x$posid) + nVectorSites)*100)
 }))
 
 siteTable <- arrange(siteCounts, expType)
 openxlsx::write.xlsx(siteTable, file = 'tables_and_figures/siteCountTable.xlsx')
 
+
+# Test for differences in the number of sites recovered between single chain and split chain dogs.
 
 # Difference between number of sites recovered from single chain vs split chain (sample level p-val)
 wilcox.test(subset(siteCounts, expType == 'SingleChain')$nSites, subset(siteCounts, expType == 'SplitChain')$nSites)$p.val
@@ -191,16 +221,6 @@ wilcox.test(subset(siteCounts, expType == 'SingleChain')$nSitesVCNCorrected, sub
 
 # Difference between percent sites in vector from single chain vs split chain (sample level p-val)
 wilcox.test(subset(siteCounts, expType == 'SingleChain')$percentSitesInVector, subset(siteCounts, expType == 'SplitChain')$percentSitesInVector)$p.val
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -358,6 +378,8 @@ names(report$sitesTable) <- c('Dog',  'Timepoint', 'Position', 'Abundance', 'ITR
 openxlsx::write.xlsx(report$sitesTable, file = 'tables_and_figures/sites.xlsx')
 
 
+
+
 # Random site tests
 #--------------------------------------------------------------------------------------------------
 
@@ -398,6 +420,7 @@ if(! file.exists('data/canFam3.randomSites_annotated.1.RData')) {
 # Create subsets of the random sites to export to CPU clusters.
 randomSites_annotated_lite <- select(randomSites_annotated, posid, nearestFeatureDist, nearestOncoFeatureDist)
 randomSites_annotated_lite_inTU <- subset(randomSites_annotated_lite, nearestFeatureDist == 0)
+
 
 
 # Test for enrichment in TUs compared to random sites
@@ -452,8 +475,6 @@ report$inTU.randomTest <-
   geom_segment(aes(x = 77, y = 7000, xend = 77, yend = 1000), size = 1.1, color = "dodgerblue1", arrow = arrow(length = unit(0.03, "npc")))
 
 ggsave(report$inTU.randomTest, file = 'tables_and_figures/inTu_vs_randomSites.pdf')
-
-  
 
 
 
